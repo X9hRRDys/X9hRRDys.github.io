@@ -1,0 +1,83 @@
+$bgcolor: #041C32;
+$color: #D6D6D3;
+$src-border-color: #064663;
+$border-color: #D6D6D3;
+$quote-color: #A6A6A3;
+
+$default-fontfamily: sans-serif;
+$src-fontfamily: ui-monospace, Menlo, Monaco, "Cascadia Mono",
+"Segoe UI Mono", "Roboto Mono", "Oxygen Mono",
+"Ubuntu Monospace", "Source Code Pro", "Fira Mono",
+"Droid Sans Mono", "Courier New", monospace;
+
+body {
+  line-height: 1.8;
+  -webkit-text-size-adjust: 100%;
+  font-family: $default-fontfamily;
+  background-color: $bgcolor;
+  color: $color;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2em;
+}
+
+a {
+  color: inherit;
+  font-family: $src-fontfamily;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: inherit;
+}
+
+h1 a{
+  text-decoration: none;
+}
+
+#preamble {
+  margin-bottom: 50px;
+}
+
+.outline-2 {
+  margin-bottom: 50px;
+  h2 {
+    border-bottom: $border-color 1px solid;
+    padding: 5px 0 0;
+    margin: 20px 0 0;
+  }
+}
+
+code, kbd {
+  color: inherit;
+  font-family: $src-fontfamily;
+}
+
+kbd {
+  border: 1px solid $color;
+  border-radius: 3px;
+  padding: 0 5px;
+}
+
+.post-date {
+  font-family: $src-fontfamily;
+  color: inherit;
+}
+
+pre {
+  display: block;
+  color: $color;
+  border: $src-border-color 1px solid;
+  font-family: $src-fontfamily;
+  padding: 0.5em;
+  border-radius: 4px;
+  overflow: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar{
+    display: none;
+  }
+}
+
+blockquote {
+  padding: 0 1em;
+}
