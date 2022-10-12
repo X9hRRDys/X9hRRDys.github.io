@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="tlmgr を用いて LaTeX のパッケージを復元します">
+<link rel="alternate"
+      type="application/rss+xml"
+      href="https://X9hRRDys.github.io/rss.xml"
+      title="RSS feed for https://X9hRRDys.github.io/">
+<title>TeX Live のパッケージの復元</title>
+<meta name="author" content="X9hRRDys">
+<meta name="referrer" content="no-referrer">
+<link href= "static/style.css" rel="stylesheet" type="text/css">
+<link rel="icon" href="static/favicon.svg" type="image/svg+xml"></head>
+<body>
+<div id="preamble" class="status"><div class="header"><a href="index.html">Blog</a>
+<a href="archive.html">Archive</a></div></div>
+<div id="content">
+<div class="post-date">2022/10/12</div><h1 class="post-title"><a href="https://X9hRRDys.github.io/texlive_restore_previous_version.html">TeX Live のパッケージの復元</a></h1>
+<p>
+TeX Live のパッケージを <code>tlmgr</code> でアップデートすると nicematrix に不具合がありコンパイルがうまくできなくなりました。このパッケージを更新前のものに戻します。
+</p>
+
+<div id="outline-container-orgaf98799" class="outline-2">
+<h2 id="orgaf98799">パッケージを復元する</h2>
+<div class="outline-text-2" id="text-orgaf98799">
+<p>
+ターミナルで
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">tlmgr info nicematrix
+</pre>
+</div>
+<p>
+と入力。出力結果の一部に <code>revision: 64433</code> とリビジョン番号が表示されました。 <code>tlmgr restore [パッケージ名]</code> でコンピュータ上にバックアップされているパッケージのすべてのリビジョンが表示されます。今回は
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">tlmgr restore nicematrix
+</pre>
+</div>
+<p>
+と入力して
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">Available backups for nicematrix: 64185 <span style="color: #6699CC;">(</span>2022-09-20 07:03<span style="color: #6699CC;">)</span>
+</pre>
+</div>
+<p>
+と表示されました。 <code>sudo tlmgr restore [パッケージ名] [リビジョン番号]</code> で指定したリビジョンを復元します。
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">sudo tlmgr restore nicematrix 64185
+</pre>
+</div>
+<p>
+これでうまくコンパイルできるようになりました。
+</p>
+</div>
+</div>
+<div class="taglist"></div></div>
+<div id="postamble" class="status"></div>
+</body>
+</html>

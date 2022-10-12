@@ -4,7 +4,55 @@
 <title><![CDATA[Blog]]></title>
 <description><![CDATA[Blog]]></description>
 <link>https://X9hRRDys.github.io/</link>
-<lastBuildDate>Sun, 21 Aug 2022 22:06:03 +0900</lastBuildDate>
+<lastBuildDate>Wed, 12 Oct 2022 21:41:44 +0900</lastBuildDate>
+<item>
+  <title><![CDATA[TeX Live のパッケージの復元]]></title>
+  <description><![CDATA[
+<p>
+TeX Live のパッケージを <code>tlmgr</code> でアップデートすると nicematrix に不具合がありコンパイルがうまくできなくなりました。このパッケージを更新前のものに戻します。
+</p>
+
+<div id="outline-container-orgaf98799" class="outline-2">
+<h2 id="orgaf98799">パッケージを復元する</h2>
+<div class="outline-text-2" id="text-orgaf98799">
+<p>
+ターミナルで
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">tlmgr info nicematrix
+</pre>
+</div>
+<p>
+と入力。出力結果の一部に <code>revision: 64433</code> とリビジョン番号が表示されました。 <code>tlmgr restore [パッケージ名]</code> でコンピュータ上にバックアップされているパッケージのすべてのリビジョンが表示されます。今回は
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">tlmgr restore nicematrix
+</pre>
+</div>
+<p>
+と入力して
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">Available backups for nicematrix: 64185 <span style="color: #6699CC;">(</span>2022-09-20 07:03<span style="color: #6699CC;">)</span>
+</pre>
+</div>
+<p>
+と表示されました。 <code>sudo tlmgr restore [パッケージ名] [リビジョン番号]</code> で指定したリビジョンを復元します。
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">sudo tlmgr restore nicematrix 64185
+</pre>
+</div>
+<p>
+これでうまくコンパイルできるようになりました。
+</p>
+</div>
+</div>
+<div class="taglist"></div>]]></description>
+  <link>https://x9hrrdys.github.io/texlive_restore_previous_version.html</link>
+  <guid>https://x9hrrdys.github.io/texlive_restore_previous_version.html</guid>
+  <pubDate>Wed, 12 Oct 2022 09:00:00 +0900</pubDate>
+</item>
 <item>
   <title><![CDATA[Emacs の行頭移動 C-a とバッファ全範囲の一括インデントの改善]]></title>
   <description><![CDATA[
