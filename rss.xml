@@ -4,7 +4,7 @@
 <title><![CDATA[Blog]]></title>
 <description><![CDATA[Blog]]></description>
 <link>https://X9hRRDys.github.io/</link>
-<lastBuildDate>Wed, 12 Oct 2022 21:41:44 +0900</lastBuildDate>
+<lastBuildDate>Wed, 28 Dec 2022 06:28:28 +0900</lastBuildDate>
 <item>
   <title><![CDATA[TeX Live のパッケージの復元]]></title>
   <description><![CDATA[
@@ -12,18 +12,18 @@
 TeX Live のパッケージを <code>tlmgr</code> でアップデートすると nicematrix に不具合がありコンパイルがうまくできなくなりました。このパッケージを更新前のものに戻します。
 </p>
 
-<div id="outline-container-orgaf98799" class="outline-2">
-<h2 id="orgaf98799">パッケージを復元する</h2>
-<div class="outline-text-2" id="text-orgaf98799">
+<div id="outline-container-orgad6373a" class="outline-2">
+<h2 id="orgad6373a">パッケージを復元する</h2>
+<div class="outline-text-2" id="text-orgad6373a">
 <p>
-ターミナルで
+まずは nicematrix の情報を確認するためターミナルで次のように入力します。
 </p>
 <div class="org-src-container">
 <pre class="src src-shell">tlmgr info nicematrix
 </pre>
 </div>
 <p>
-と入力。出力結果の一部に <code>revision: 64433</code> とリビジョン番号が表示されました。 <code>tlmgr restore [パッケージ名]</code> でコンピュータ上にバックアップされているパッケージのすべてのリビジョンが表示されます。今回は
+出力結果の一部に <code>revision: 64433</code> とリビジョン番号が表示されました。 次にコンピュータ上にバックアップされているパッケージのすべてのリビジョンを確認します。 これは <code>tlmgr restore [パッケージ名]</code> で確認できます。今回は
 </p>
 <div class="org-src-container">
 <pre class="src src-shell">tlmgr restore nicematrix
@@ -37,7 +37,7 @@ TeX Live のパッケージを <code>tlmgr</code> でアップデートすると
 </pre>
 </div>
 <p>
-と表示されました。 <code>sudo tlmgr restore [パッケージ名] [リビジョン番号]</code> で指定したリビジョンを復元します。
+と表示されました。最後に復元を行います。 <code>sudo tlmgr restore [パッケージ名] [リビジョン番号]</code> で指定したリビジョンを復元します。今回の場合は次のように入力します。
 </p>
 <div class="org-src-container">
 <pre class="src src-shell">sudo tlmgr restore nicematrix 64185
@@ -182,9 +182,9 @@ Emacs でカーソル位置を行頭に移動させる場合 <kbd>C-a</kbd> と�
   <title><![CDATA[Emacs と Notmuch でメールを管理する]]></title>
   <description><![CDATA[
 
-<div id="outline-container-orgbc995b6" class="outline-2">
-<h2 id="orgbc995b6">はじめに</h2>
-<div class="outline-text-2" id="text-orgbc995b6">
+<div id="outline-container-org132b66c" class="outline-2">
+<h2 id="org132b66c">はじめに</h2>
+<div class="outline-text-2" id="text-org132b66c">
 <p>
 Emacs でメールを管理する方法はいくつかありますが、タグベース管理ができる Notmuch を採用しました。以前は Mac 標準の Mail.app を使用していましたがそれと比較して次のようなメリットがあります。
 </p>
@@ -201,9 +201,9 @@ Emacs でメールを管理する方法はいくつかありますが、タグ�
 </p>
 </div>
 
-<div id="outline-container-org266de44" class="outline-3">
-<h3 id="org266de44">Maildir 形式と Mbox 形式について</h3>
-<div class="outline-text-3" id="text-org266de44">
+<div id="outline-container-org93b6b00" class="outline-3">
+<h3 id="org93b6b00">Maildir 形式と Mbox 形式について</h3>
+<div class="outline-text-3" id="text-org93b6b00">
 <p>
 メールの保存形式にはおもに次の2つがあります。
 </p>
@@ -219,9 +219,9 @@ Notmuch は Maildir 形式のみに対応しています。Maildir 形式はメ�
 </div>
 </div>
 
-<div id="outline-container-orgebb0711" class="outline-3">
-<h3 id="orgebb0711">POP3 と IMAP について</h3>
-<div class="outline-text-3" id="text-orgebb0711">
+<div id="outline-container-org4542702" class="outline-3">
+<h3 id="org4542702">POP3 と IMAP について</h3>
+<div class="outline-text-3" id="text-org4542702">
 <p>
 メールにアクセスする形式にはおもに次の2つがあります。
 </p>
@@ -237,9 +237,9 @@ POP3 は郵便局にあるメールを郵便屋さんが自宅まで届けてく
 </div>
 </div>
 
-<div id="outline-container-orgbb77fe0" class="outline-2">
-<h2 id="orgbb77fe0">使用するソフトフェア</h2>
-<div class="outline-text-2" id="text-orgbb77fe0">
+<div id="outline-container-org976dd2a" class="outline-2">
+<h2 id="org976dd2a">使用するソフトフェア</h2>
+<div class="outline-text-2" id="text-org976dd2a">
 <p>
 Mail.app など通常のメールソフトは受信・インデックス作成・閲覧・送信などを一括で行いますが、 Emacs でメール環境を整える場合はそれらの機能を別々にインストール、設定する必要があります。今回使用するものは次の通りです。
 </p>
@@ -253,9 +253,9 @@ Mail.app など通常のメールソフトは受信・インデックス作成�
 </div>
 </div>
 
-<div id="outline-container-org45391a3" class="outline-2">
-<h2 id="org45391a3">準備: メールの保存場所の作成</h2>
-<div class="outline-text-2" id="text-org45391a3">
+<div id="outline-container-org6ae0b7b" class="outline-2">
+<h2 id="org6ae0b7b">準備: メールの保存場所の作成</h2>
+<div class="outline-text-2" id="text-org6ae0b7b">
 <p>
 まずは Maildir 形式のメールの保存場所を用意します。
 </p>
@@ -267,7 +267,7 @@ Mail.app など通常のメールソフトは受信・インデックス作成�
 <li><p>
 メールアカウントが2つ(<code>[account1], [account2]</code>)ある場合のディレクトリのツリーは次のようになります。 <code>sent</code> と <code>drafts</code> 内にもディレクトリ <code>cur, new, tmp</code> を作成します（システムが自動的に作成してくれる場合もあります）。
 </p>
-<pre class="example" id="orgcffa43d">
+<pre class="example" id="orgf28c25f">
 ~/.maildir
 ├── drafts
 │   ├── cur
@@ -294,13 +294,13 @@ Mail.app など通常のメールソフトは受信・インデックス作成�
 </div>
 </div>
 
-<div id="outline-container-org1c3d381" class="outline-2">
-<h2 id="org1c3d381">getmail6 でPOP3メールを受信する</h2>
-<div class="outline-text-2" id="text-org1c3d381">
+<div id="outline-container-org46495f5" class="outline-2">
+<h2 id="org46495f5">getmail6 でPOP3メールを受信する</h2>
+<div class="outline-text-2" id="text-org46495f5">
 </div>
-<div id="outline-container-orgeccfc0e" class="outline-3">
-<h3 id="orgeccfc0e">インストール</h3>
-<div class="outline-text-3" id="text-orgeccfc0e">
+<div id="outline-container-org40569bb" class="outline-3">
+<h3 id="org40569bb">インストール</h3>
+<div class="outline-text-3" id="text-org40569bb">
 <p>
 getmail6 は POP3、 IMAPメールを受信するためのプログラムです。 Python 3 で動作します。
 </p>
@@ -314,9 +314,9 @@ getmail6 は POP3、 IMAPメールを受信するためのプログラムです�
 </div>
 </div>
 
-<div id="outline-container-org9080fb8" class="outline-3">
-<h3 id="org9080fb8">設定</h3>
-<div class="outline-text-3" id="text-org9080fb8">
+<div id="outline-container-org0ed7d32" class="outline-3">
+<h3 id="org0ed7d32">設定</h3>
+<div class="outline-text-3" id="text-org0ed7d32">
 <p>
 設定ファイルは <code>~.getmail/</code> 内に置きます。 <code>~/.getmail/[account1]</code>, <code>~/.getmail/[account2]</code>,&#x2026; のようにアカウントごとにファイルを作成します。
 設定の例は次の通りです（参考: <a href="https://getmail6.org/configuration.html#configuring">getmail documentation</a> ）。
@@ -344,9 +344,9 @@ getmail6 は POP3、 IMAPメールを受信するためのプログラムです�
 </div>
 </div>
 
-<div id="outline-container-org03cf1f7" class="outline-3">
-<h3 id="org03cf1f7">メールの受信</h3>
-<div class="outline-text-3" id="text-org03cf1f7">
+<div id="outline-container-org58f614c" class="outline-3">
+<h3 id="org58f614c">メールの受信</h3>
+<div class="outline-text-3" id="text-org58f614c">
 <p>
 ターミナルで
 </p>
@@ -361,13 +361,13 @@ getmail6 は POP3、 IMAPメールを受信するためのプログラムです�
 </div>
 </div>
 
-<div id="outline-container-orgcbc3668" class="outline-2">
-<h2 id="orgcbc3668">Notmuch</h2>
-<div class="outline-text-2" id="text-orgcbc3668">
+<div id="outline-container-org1b70e6f" class="outline-2">
+<h2 id="org1b70e6f">Notmuch</h2>
+<div class="outline-text-2" id="text-org1b70e6f">
 </div>
-<div id="outline-container-org5799030" class="outline-3">
-<h3 id="org5799030">インストール</h3>
-<div class="outline-text-3" id="text-org5799030">
+<div id="outline-container-orgb790591" class="outline-3">
+<h3 id="orgb790591">インストール</h3>
+<div class="outline-text-3" id="text-orgb790591">
 <p>
 Notmuch は受信したメールのインデックス作成、タグ処理、検索を行うためのプログラムです。メールファイルそのものを書き換えたり移動させたりする機能はありません。
 </p>
@@ -381,9 +381,9 @@ Notmuch は受信したメールのインデックス作成、タグ処理、検
 </div>
 </div>
 
-<div id="outline-container-org54af09f" class="outline-3">
-<h3 id="org54af09f">設定</h3>
-<div class="outline-text-3" id="text-org54af09f">
+<div id="outline-container-orgead7d21" class="outline-3">
+<h3 id="orgead7d21">設定</h3>
+<div class="outline-text-3" id="text-orgead7d21">
 <p>
 初期設定を行います。ターミナルにはじめて <code>notmuch</code> と入力すると、 <code>~/.notmuch-config</code> が作成されます。対話形式の質問に答えることで設定を行うこともできますが <code>~/.notmuch-config</code> を直接編集することもできます（参考: <a href="https://notmuchmail.org/getting-started/">notmuch: Getting Started with Notmuch</a>）。
 </p>
@@ -436,9 +436,9 @@ Notmuch の検索は日本語にも対応していますが設定が必要です
 </div>
 </div>
 
-<div id="outline-container-orga476942" class="outline-3">
-<h3 id="orga476942">ターミナル上でメールを検索してみる</h3>
-<div class="outline-text-3" id="text-orga476942">
+<div id="outline-container-org0f6e75c" class="outline-3">
+<h3 id="org0f6e75c">ターミナル上でメールを検索してみる</h3>
+<div class="outline-text-3" id="text-org0f6e75c">
 <p>
 ここまでの設定で Notmuch がうまく機能しているか確かめてみます。ターミナルでメールを検索してみます（参考: <a href="https://notmuchmail.org/doc/latest/man7/notmuch-search-terms.html">notmuch-search-terms</a>）。
 </p>
@@ -452,13 +452,13 @@ notmuch search from:&#23665; AND date:2020..today <span style="color: #65737E;">
 </div>
 </div>
 
-<div id="outline-container-org8e282ef" class="outline-2">
-<h2 id="org8e282ef">msmtp でメールを送信する</h2>
-<div class="outline-text-2" id="text-org8e282ef">
+<div id="outline-container-org9d11ba7" class="outline-2">
+<h2 id="org9d11ba7">msmtp でメールを送信する</h2>
+<div class="outline-text-2" id="text-org9d11ba7">
 </div>
-<div id="outline-container-org356cc06" class="outline-3">
-<h3 id="org356cc06">インストール</h3>
-<div class="outline-text-3" id="text-org356cc06">
+<div id="outline-container-orgf968877" class="outline-3">
+<h3 id="orgf968877">インストール</h3>
+<div class="outline-text-3" id="text-orgf968877">
 <p>
 msmtp はメールを送信するためのプログラムです。
 </p>
@@ -472,9 +472,9 @@ msmtp はメールを送信するためのプログラムです。
 </div>
 </div>
 
-<div id="outline-container-org58c1aaf" class="outline-3">
-<h3 id="org58c1aaf">設定</h3>
-<div class="outline-text-3" id="text-org58c1aaf">
+<div id="outline-container-orgb3b949c" class="outline-3">
+<h3 id="orgb3b949c">設定</h3>
+<div class="outline-text-3" id="text-orgb3b949c">
 <p>
 設定ファイル <code>~/.msmtprc</code> に複数のアカウントの設定をまとめて記述します（参考: <a href="https://marlam.de/msmtp/msmtp.html#A-user-configuration-file">msmtp: Examples: A user configuration file</a>）。
 </p>
@@ -513,9 +513,9 @@ account default : [account1]
 </div>
 </div>
 
-<div id="outline-container-org7856971" class="outline-2">
-<h2 id="org7856971">Emacs の notmuch</h2>
-<div class="outline-text-2" id="text-org7856971">
+<div id="outline-container-orgb95f5fd" class="outline-2">
+<h2 id="orgb95f5fd">Emacs の notmuch</h2>
+<div class="outline-text-2" id="text-orgb95f5fd">
 <p>
 Emacs の notmuch では受信したメールの閲覧、検索、タグ処理、メールの作成と送信ができます。 <kbd>M-x package-install notmuch</kbd> でインストールできます。
 </p>
@@ -530,9 +530,9 @@ notmuch には3つのモードが備わっています。
 </ul>
 </div>
 
-<div id="outline-container-orgf9e8f55" class="outline-3">
-<h3 id="orgf9e8f55">作業の流れの例</h3>
-<div class="outline-text-3" id="text-orgf9e8f55">
+<div id="outline-container-org910bf72" class="outline-3">
+<h3 id="org910bf72">作業の流れの例</h3>
+<div class="outline-text-3" id="text-org910bf72">
 <ul class="org-ul">
 <li><kbd>M-x notmuch</kbd> で notmuch-hello バッファが表示される。 <kbd>G</kbd> でインデックスの更新。新しいメールには <code>unread</code> と <code>inbox</code> のタグが自動的につく。</li>
 <li><kbd>j</kbd> <kbd>u</kbd> で notmuch-search モードの新しいバッファが開き、未読メッセージ（ <code>unread</code> タグのメッセージ）の一覧が表示される。</li>
@@ -549,9 +549,9 @@ notmuch には3つのモードが備わっています。
 </div>
 </div>
 
-<div id="outline-container-orge2e2711" class="outline-3">
-<h3 id="orge2e2711">init.el の設定</h3>
-<div class="outline-text-3" id="text-orge2e2711">
+<div id="outline-container-org834b56c" class="outline-3">
+<h3 id="org834b56c">init.el の設定</h3>
+<div class="outline-text-3" id="text-org834b56c">
 <div class="org-src-container">
 <pre class="src src-elisp"><span style="color: #65737E;">;; </span><span style="color: #65737E;">&#26085;&#26412;&#35486;&#26908;&#32034;&#12398;&#12383;&#12417;&#12398;&#29872;&#22659;&#22793;&#25968;&#12398;&#35373;&#23450;</span>
 <span style="color: #6699CC;">(</span>setenv <span style="color: #99C794;">"XAPIAN_CJK_NGRAM"</span> <span style="color: #99C794;">"1"</span><span style="color: #6699CC;">)</span>
@@ -636,8 +636,7 @@ notmuch には3つのモードが備わっています。
       `<span style="color: #E27E8D;">(</span><span style="color: #99C794;">(</span>,<span style="color: #C594C5;">(</span>kbd <span style="color: #99C794;">"a"</span><span style="color: #C594C5;">)</span> notmuch-archive-tags <span style="color: #99C794;">"Archive"</span><span style="color: #99C794;">)</span>
         <span style="color: #99C794;">(</span>,<span style="color: #C594C5;">(</span>kbd <span style="color: #99C794;">"d"</span><span style="color: #C594C5;">)</span> <span style="color: #C594C5;">(</span><span style="color: #99C794;">"+deleted"</span> <span style="color: #99C794;">"-inbox"</span> <span style="color: #99C794;">"-archived"</span><span style="color: #C594C5;">)</span> <span style="color: #99C794;">"Delete"</span><span style="color: #99C794;">)</span>
         <span style="color: #99C794;">(</span>,<span style="color: #C594C5;">(</span>kbd <span style="color: #99C794;">"f"</span><span style="color: #C594C5;">)</span> <span style="color: #C594C5;">(</span><span style="color: #99C794;">"+flagged"</span><span style="color: #C594C5;">)</span> <span style="color: #99C794;">"Flag"</span><span style="color: #99C794;">)</span>
-        <span style="color: #99C794;">(</span>,<span style="color: #C594C5;">(</span>kbd <span style="color: #99C794;">"u"</span><span style="color: #C594C5;">)</span> notmuch-show-mark-read-tags <span style="color: #99C794;">"Mark read"</span><span style="color: #99C794;">)</span>
-        <span style="color: #E27E8D;">)</span><span style="color: #6699CC;">)</span>
+        <span style="color: #99C794;">(</span>,<span style="color: #C594C5;">(</span>kbd <span style="color: #99C794;">"u"</span><span style="color: #C594C5;">)</span> notmuch-show-mark-read-tags <span style="color: #99C794;">"Mark read"</span><span style="color: #99C794;">)</span><span style="color: #E27E8D;">)</span><span style="color: #6699CC;">)</span>
 
 <span style="color: #65737E;">;; </span><span style="color: #65737E;">&#12513;&#12483;&#12475;&#12540;&#12472;&#26908;&#32034;&#12398;&#12461;&#12540;&#12496;&#12452;&#12531;&#12487;&#12451;&#12531;&#12464;</span>
 <span style="color: #65737E;">;; </span><span style="color: #65737E;">&#20363;&#12360;&#12400; notmuch-hello&#12289;notmuch-search&#12289;notmuch-show &#12514;&#12540;&#12489;&#12391;</span>
@@ -652,24 +651,21 @@ notmuch には3つのモードが備わっています。
         <span style="color: #99C794;">(</span><span style="color: #EC5f67;">:name</span> <span style="color: #99C794;">"inbox"</span> <span style="color: #EC5f67;">:query</span> <span style="color: #99C794;">"tag:inbox"</span> <span style="color: #EC5f67;">:key</span> ,<span style="color: #C594C5;">(</span>kbd <span style="color: #99C794;">"i"</span><span style="color: #C594C5;">)</span><span style="color: #99C794;">)</span>
         <span style="color: #99C794;">(</span><span style="color: #EC5f67;">:name</span> <span style="color: #99C794;">"replied"</span> <span style="color: #EC5f67;">:query</span> <span style="color: #99C794;">"tag:replied"</span> <span style="color: #EC5f67;">:key</span> ,<span style="color: #C594C5;">(</span>kbd <span style="color: #99C794;">"R"</span><span style="color: #C594C5;">)</span><span style="color: #99C794;">)</span>
         <span style="color: #99C794;">(</span><span style="color: #EC5f67;">:name</span> <span style="color: #99C794;">"sent"</span> <span style="color: #EC5f67;">:query</span> <span style="color: #99C794;">"tag:sent"</span> <span style="color: #EC5f67;">:key</span> ,<span style="color: #C594C5;">(</span>kbd <span style="color: #99C794;">"s"</span><span style="color: #C594C5;">)</span><span style="color: #99C794;">)</span>
-        <span style="color: #99C794;">(</span><span style="color: #EC5f67;">:name</span> <span style="color: #99C794;">"unread"</span> <span style="color: #EC5f67;">:query</span> <span style="color: #99C794;">"tag:inbox AND tag:unread"</span> <span style="color: #EC5f67;">:key</span> ,<span style="color: #C594C5;">(</span>kbd <span style="color: #99C794;">"u"</span><span style="color: #C594C5;">)</span><span style="color: #99C794;">)</span>
-        <span style="color: #E27E8D;">)</span><span style="color: #6699CC;">)</span>
+        <span style="color: #99C794;">(</span><span style="color: #EC5f67;">:name</span> <span style="color: #99C794;">"unread"</span> <span style="color: #EC5f67;">:query</span> <span style="color: #99C794;">"tag:inbox AND tag:unread"</span> <span style="color: #EC5f67;">:key</span> ,<span style="color: #C594C5;">(</span>kbd <span style="color: #99C794;">"u"</span><span style="color: #C594C5;">)</span><span style="color: #99C794;">)</span><span style="color: #E27E8D;">)</span><span style="color: #6699CC;">)</span>
 
 <span style="color: #65737E;">;; </span><span style="color: #65737E;">notmuch-search &#12514;&#12540;&#12489;&#12391;</span>
 <span style="color: #65737E;">;; </span><span style="color: #65737E;">&#29305;&#23450;&#12398;&#12479;&#12464;&#12364;&#12388;&#12356;&#12383;&#12513;&#12483;&#12475;&#12540;&#12472;&#12398;&#33394;&#12392;&#25991;&#23383;&#12398;&#22826;&#12373;&#12434;&#22793;&#12360;&#12427;</span>
 <span style="color: #6699CC;">(</span><span style="color: #C594C5;">setq</span> notmuch-search-line-faces
       '<span style="color: #E27E8D;">(</span><span style="color: #99C794;">(</span><span style="color: #99C794;">"unread"</span> . <span style="color: #C594C5;">(</span><span style="color: #EC5f67;">:weight</span> bold<span style="color: #C594C5;">)</span><span style="color: #99C794;">)</span>
         <span style="color: #99C794;">(</span><span style="color: #99C794;">"flagged"</span> . <span style="color: #C594C5;">(</span><span style="color: #EC5f67;">:foreground</span> <span style="color: #99C794;">"#E27E8D"</span><span style="color: #C594C5;">)</span><span style="color: #99C794;">)</span>
-        <span style="color: #99C794;">(</span><span style="color: #99C794;">"deleted"</span> . <span style="color: #C594C5;">(</span><span style="color: #EC5f67;">:foreground</span> <span style="color: #99C794;">"#A7ADBA"</span><span style="color: #C594C5;">)</span><span style="color: #99C794;">)</span>
-        <span style="color: #E27E8D;">)</span><span style="color: #6699CC;">)</span>
+        <span style="color: #99C794;">(</span><span style="color: #99C794;">"deleted"</span> . <span style="color: #C594C5;">(</span><span style="color: #EC5f67;">:foreground</span> <span style="color: #99C794;">"#A7ADBA"</span><span style="color: #C594C5;">)</span><span style="color: #99C794;">)</span><span style="color: #E27E8D;">)</span><span style="color: #6699CC;">)</span>
 
 <span style="color: #65737E;">;; </span><span style="color: #65737E;">&#36865;&#20449;&#12375;&#12383;&#12513;&#12540;&#12523;&#12398;&#20445;&#23384;&#22580;&#25152;&#12392;&#12289;&#36865;&#20449;&#12375;&#12383;&#12513;&#12540;&#12523;&#12398;&#12479;&#12464;&#20966;&#29702;&#12398;&#35373;&#23450;</span>
 <span style="color: #65737E;">;; </span><span style="color: #65737E;">&#36865;&#20449;&#24460;&#12395; sent &#12479;&#12464;&#12434;&#12388;&#12369; unread&#12289;inbox &#12479;&#12464;&#12434;&#12399;&#12378;&#12377;</span>
 <span style="color: #65737E;">;; </span><span style="color: #65737E;">&#35373;&#23450;&#12375;&#12394;&#12356;&#12392; unread&#12289;inbox &#12479;&#12464;&#12418;&#12388;&#12367;</span>
 <span style="color: #6699CC;">(</span><span style="color: #C594C5;">setq</span> notmuch-fcc-dirs
       '<span style="color: #E27E8D;">(</span><span style="color: #99C794;">(</span><span style="color: #99C794;">"account1@example.com"</span> . <span style="color: #99C794;">"[account1]/sent +sent -unread -inbox"</span><span style="color: #99C794;">)</span>
-        <span style="color: #99C794;">(</span><span style="color: #99C794;">"account2@example.com"</span> . <span style="color: #99C794;">"[account2]/sent +sent -unread -inbox"</span><span style="color: #99C794;">)</span>
-        <span style="color: #E27E8D;">)</span><span style="color: #6699CC;">)</span>
+        <span style="color: #99C794;">(</span><span style="color: #99C794;">"account2@example.com"</span> . <span style="color: #99C794;">"[account2]/sent +sent -unread -inbox"</span><span style="color: #99C794;">)</span><span style="color: #E27E8D;">)</span><span style="color: #6699CC;">)</span>
 </pre>
 </div>
 
@@ -683,9 +679,9 @@ notmuch には3つのモードが備わっています。
 </div>
 </div>
 
-<div id="outline-container-org34327d4" class="outline-2">
-<h2 id="org34327d4">不要なメールファイルをゴミ箱に移動させる</h2>
-<div class="outline-text-2" id="text-org34327d4">
+<div id="outline-container-orgdae3878" class="outline-2">
+<h2 id="orgdae3878">不要なメールファイルをゴミ箱に移動させる</h2>
+<div class="outline-text-2" id="text-orgdae3878">
 <p>
 Notmuch にはファイルを書き換えたり移動させたりする機能はありません。したがってメールファイルを直接削除することもできません。メールをゴミ箱に移動させるためには削除したいメールに <code>deleted</code> タグをつけます。その後ターミナルで次のように入力してファイルをゴミ箱に移動させます（参考: <a href="https://notmuchmail.org/excluding/">Notmuch: Message exclusion and deletion</a>）。
 </p>
@@ -696,9 +692,9 @@ Notmuch にはファイルを書き換えたり移動させたりする機能は
 </div>
 </div>
 
-<div id="outline-container-orgc73ed32" class="outline-2">
-<h2 id="orgc73ed32">おまけ1: User-Agent の設定</h2>
-<div class="outline-text-2" id="text-orgc73ed32">
+<div id="outline-container-orgf54a42a" class="outline-2">
+<h2 id="orgf54a42a">おまけ1: User-Agent の設定</h2>
+<div class="outline-text-2" id="text-orgf54a42a">
 <p>
 メールのソースにはヘッダとして差出人(From)や宛先(To)の情報が記載されています。Emacs notmuch でソースを確認する場合は <code>notmuch-show</code> モードで <kbd>V</kbd> を押します。このメールヘッダには差出人が用いたメールソフトの情報が <code>User-Agent</code> や <code>X-Mailer</code> として記載されていることもあります。Notmuch と Emacs を使っていますよ、という情報をメールヘッダに
 </p>
@@ -709,28 +705,26 @@ User-Agent: Notmuch 0.36, Emacs 28.1
 という形で記載したい場合は <code>init.el</code> に次の設定を加えます。
 </p>
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #6699CC;">(</span><span style="color: #C594C5;">defun</span> <span style="color: #6699CC;">my-user-agent</span> <span style="color: #E27E8D;">()</span>
-  <span style="color: #8b969e;">"Generate a '</span><span style="color: #F99157;">User-Agent:</span><span style="color: #8b969e;">' string"</span>
-  <span style="color: #E27E8D;">(</span>concat <span style="color: #99C794;">"Notmuch "</span> <span style="color: #99C794;">(</span>notmuch-cli-version<span style="color: #99C794;">)</span>
-          <span style="color: #99C794;">", Emacs "</span> emacs-version<span style="color: #E27E8D;">)</span><span style="color: #6699CC;">)</span>
-<span style="color: #6699CC;">(</span><span style="color: #C594C5;">setq</span> notmuch-mua-user-agent-function 'my-user-agent<span style="color: #6699CC;">)</span>
+<pre class="src src-elisp"><span style="color: #6699CC;">(</span><span style="color: #C594C5;">setq</span> notmuch-mua-user-agent-function
+      <span style="color: #E27E8D;">(</span><span style="color: #C594C5;">lambda</span> <span style="color: #99C794;">()</span>
+        <span style="color: #99C794;">(</span>concat <span style="color: #99C794;">"Notmuch "</span> <span style="color: #C594C5;">(</span>notmuch-cli-version<span style="color: #C594C5;">)</span> <span style="color: #99C794;">", Emacs "</span> emacs-version<span style="color: #99C794;">)</span><span style="color: #E27E8D;">)</span><span style="color: #6699CC;">)</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgc719887" class="outline-2">
-<h2 id="orgc719887">おまけ2: org-mode のファイルにリンクをはる</h2>
-<div class="outline-text-2" id="text-orgc719887">
+<div id="outline-container-org1786d99" class="outline-2">
+<h2 id="org1786d99">おまけ2: org-mode のファイルにリンクをはる</h2>
+<div class="outline-text-2" id="text-org1786d99">
 <p>
 ol-notmuch を用いると「メッセージ」、あるいは「検索結果」へのリンクを org-mode にはることができます。  <code>package-install ol-notmuch</code> でインストールできます。 <code>init.el</code> への設定は特にありません。メッセージ（notmuch-show モード）または検索結果（notmuch-search モード）上で <kbd>C-c</kbd> <kbd>l</kbd> を押すとリンクが生成されます。 org-mode で <kbd>C-c</kbd> <kbd>C-l</kbd> を押すとリンクをはることができます。
 </p>
 </div>
 </div>
 
-<div id="outline-container-org0829a83" class="outline-2">
-<h2 id="org0829a83">おわりに</h2>
-<div class="outline-text-2" id="text-org0829a83">
+<div id="outline-container-org46375a2" class="outline-2">
+<h2 id="org46375a2">おわりに</h2>
+<div class="outline-text-2" id="text-org46375a2">
 <p>
 Mail.app から Emacs notmuch への移行のデメリットは添付ファイルをクイックルックで確認できないことです。人によっては html 形式のメールがテキスト形式で表示されることも気になるかもしれませんが、個人的には問題ありません。「はじめに」で述べた Emacs notmuch のメリットも合わせて考えると、総合的にはこのメール環境に満足しています。
 </p>
