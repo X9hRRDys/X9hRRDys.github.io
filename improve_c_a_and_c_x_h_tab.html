@@ -8,7 +8,7 @@
       href="https://X9hRRDys.github.io/rss.xml"
       title="RSS feed for https://X9hRRDys.github.io/">
 <title>Emacs の行頭移動 C-a とバッファ全範囲の一括インデントの改善</title>
-<meta name="viewport" content="with=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="author" content="X9hRRDys">
 <meta name="referrer" content="no-referrer">
 <link href= "static/style.css" rel="stylesheet" type="text/css">
@@ -19,24 +19,24 @@
 <div id="content">
 <div class="post-date">2022/08/20</div><h1 class="post-title"><a href="https://X9hRRDys.github.io/improve_c_a_and_c_x_h_tab.html">Emacs の行頭移動 C-a とバッファ全範囲の一括インデントの改善</a></h1>
 
-<div id="outline-container-org82dd1f5" class="outline-2">
-<h2 id="org82dd1f5">はじめに</h2>
-<div class="outline-text-2" id="text-org82dd1f5">
+<div id="outline-container-org8f04d48" class="outline-2">
+<h2 id="org8f04d48">はじめに</h2>
+<div class="outline-text-2" id="text-org8f04d48">
 <p>
 Emacs で頻繁に使う基本的な2つの操作を改善しました。1つめはカーソルの行頭移動 <kbd>C-a</kbd> に関する機能です。2つめはバッファ全範囲の一括インデントです。
 </p>
 </div>
 </div>
 
-<div id="outline-container-org2c2d419" class="outline-2">
-<h2 id="org2c2d419">行頭移動 <kbd>C-a</kbd> の改善</h2>
-<div class="outline-text-2" id="text-org2c2d419">
+<div id="outline-container-orgb663885" class="outline-2">
+<h2 id="orgb663885">行頭移動 <kbd>C-a</kbd> の改善</h2>
+<div class="outline-text-2" id="text-orgb663885">
 <p>
 Emacs でカーソル位置を行頭に移動させる場合 <kbd>C-a</kbd> と入力します。これは <code>move-beginning-of-line</code> という機能で、インデントに関わらずカーソルは左端まで移動します。しかしながら本当に実現したい操作は「行の空白以外の最初の文字への移動」であることがほとんどでした。今までは <kbd>C-a</kbd> <kbd>TAB</kbd> で行の左端に移動 → 空白以外の最初の文字に移動を実現していました。
 </p>
 
 <p>
-「行の空白以外の最初の文字への移動」という機能はもともと Emacs に備えられていて <code>back-to-indentation</code> で実現できます。これは <kbd>M-m</kbd> にバインディングされていますが積極的に入力したいとは思えません。
+「行の空白以外の最初の文字への移動」という機能はもともと Emacs に備えられていて <code>back-to-indentation</code> で実現できます。これは <kbd>M-m</kbd> にバインディングされていますが積極的に入力したいと思えません。
 </p>
 
 <p>
@@ -106,9 +106,9 @@ Emacs でカーソル位置を行頭に移動させる場合 <kbd>C-a</kbd> と�
 </div>
 </div>
 
-<div id="outline-container-org930cd75" class="outline-2">
-<h2 id="org930cd75">バッファ全範囲の一括インデント</h2>
-<div class="outline-text-2" id="text-org930cd75">
+<div id="outline-container-org4f70d49" class="outline-2">
+<h2 id="org4f70d49">バッファ全範囲の一括インデント</h2>
+<div class="outline-text-2" id="text-org4f70d49">
 <p>
 バッファ全体を一括インデントするとき <kbd>C-x</kbd> <kbd>h</kbd> (mark-whole-buffer) でバッファの全範囲を選択した後 <kbd>TAB</kbd> または <kbd>C-M-\</kbd> で一括インデントできます。しかしながらこの操作はカーソルの位置がバッファの先頭に移動してしまうため、インデントの後にもとの編集位置までもどる手間がかかります。
 </p>
@@ -127,9 +127,9 @@ Emacs でカーソル位置を行頭に移動させる場合 <kbd>C-a</kbd> と�
 </div>
 </div>
 
-<div id="outline-container-orgf1c9989" class="outline-2">
-<h2 id="orgf1c9989">おわりに</h2>
-<div class="outline-text-2" id="text-orgf1c9989">
+<div id="outline-container-orgf6e6740" class="outline-2">
+<h2 id="orgf6e6740">おわりに</h2>
+<div class="outline-text-2" id="text-orgf6e6740">
 <p>
 上の2つは小規模な改善ですが、どちらも頻繁に用いる機能なので重要な改善でした。さまざまなパッケージをインストールして強力な Emacs を作ることも楽しいですが、このような小さな改善を積み重ねるのも楽しいことです。
 </p>
