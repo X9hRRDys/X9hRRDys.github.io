@@ -4,7 +4,7 @@
 <title><![CDATA[Blog]]></title>
 <description><![CDATA[Blog]]></description>
 <link>https://X9hRRDys.github.io/</link>
-<lastBuildDate>Fri, 24 Feb 2023 07:46:13 +0900</lastBuildDate>
+<lastBuildDate>Tue, 20 Jun 2023 22:20:02 +0900</lastBuildDate>
 <item>
   <title><![CDATA[TeX Live のパッケージの復元]]></title>
   <description><![CDATA[
@@ -12,9 +12,9 @@
 TeX Live のパッケージを <code>tlmgr</code> でアップデートすると nicematrix に不具合がありコンパイルがうまくできなくなりました。このパッケージを更新前のものに戻します。
 </p>
 
-<div id="outline-container-org1f141d6" class="outline-2">
-<h2 id="org1f141d6">パッケージを復元する</h2>
-<div class="outline-text-2" id="text-org1f141d6">
+<div id="outline-container-org2b0f25c" class="outline-2">
+<h2 id="org2b0f25c">パッケージを復元する</h2>
+<div class="outline-text-2" id="text-org2b0f25c">
 <p>
 まず nicematrix の情報を確認するためターミナルで次のように入力します。
 </p>
@@ -33,7 +33,7 @@ TeX Live のパッケージを <code>tlmgr</code> でアップデートすると
 と入力して
 </p>
 <div class="org-src-container">
-<pre class="src src-shell">Available backups for nicematrix: 64185 <span style="color: #6699CC;">(</span>2022-09-20 07:03<span style="color: #6699CC;">)</span>
+<pre class="src src-shell">Available backups for nicematrix: 64185 <span style="color: #ffffff;">(</span>2022-09-20 07:03<span style="color: #ffffff;">)</span>
 </pre>
 </div>
 <p>
@@ -43,6 +43,9 @@ TeX Live のパッケージを <code>tlmgr</code> でアップデートすると
 <pre class="src src-shell">sudo tlmgr restore nicematrix 64185
 </pre>
 </div>
+<p>
+これでコンパイルできました。
+</p>
 </div>
 </div>
 <div class="taglist"></div>]]></description>
@@ -51,21 +54,44 @@ TeX Live のパッケージを <code>tlmgr</code> でアップデートすると
   <pubDate>Wed, 12 Oct 2022 09:00:00 +0900</pubDate>
 </item>
 <item>
+  <title><![CDATA[Emacs バッファ全範囲の一括インデントの改善]]></title>
+  <description><![CDATA[
+<p>
+バッファ全体を一括インデントするとき <kbd>C-x</kbd> <kbd>h</kbd> (mark-whole-buffer) でバッファの全範囲を選択した後 <kbd>TAB</kbd> または <kbd>C-M-\</kbd> で一括インデントできます。しかしながらこの操作はカーソルの位置がバッファの先頭に移動してしまうため、インデントの後にもとの編集位置までもどる手間がかかります。
+</p>
+
+<p>
+カーソルの位置は維持したまま全範囲を一括インデントするために、 <code>init.el</code> に次のように追記しました。 <kbd>C-x</kbd> <kbd>TAB</kbd> にバインディングしています。
+</p>
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #ffffff;">(</span><span style="color: #b6a0ff; font-weight: bold;">defun</span> <span style="color: #feacd0;">my-indent-whole-buffer</span> <span style="color: #ff66ff;">()</span>
+  <span style="color: #9ac8e0; font-style: italic;">"Indent all lines in the buffer."</span>
+  <span style="color: #ff66ff;">(</span><span style="color: #b6a0ff; font-weight: bold;">interactive</span><span style="color: #ff66ff;">)</span>
+  <span style="color: #ff66ff;">(</span>indent-region <span style="color: #00eff0;">(</span>point-min<span style="color: #00eff0;">)</span> <span style="color: #00eff0;">(</span>point-max<span style="color: #00eff0;">)</span><span style="color: #ff66ff;">)</span><span style="color: #ffffff;">)</span>
+<span style="color: #ffffff;">(</span>global-set-key <span style="color: #ff66ff;">(</span>kbd <span style="color: #79a8ff;">"C-x TAB"</span><span style="color: #ff66ff;">)</span> #'my-indent-whole-buffer<span style="color: #ffffff;">)</span>
+</pre>
+</div>
+<div class="taglist"></div>]]></description>
+  <link>https://x9hrrdys.github.io/improve_indent_whole_buffer.html</link>
+  <guid>https://x9hrrdys.github.io/improve_indent_whole_buffer.html</guid>
+  <pubDate>Sun, 21 Aug 2022 09:00:00 +0900</pubDate>
+</item>
+<item>
   <title><![CDATA[Emacs の行頭移動 C-a とバッファ全範囲の一括インデントの改善]]></title>
   <description><![CDATA[
 
-<div id="outline-container-org8f04d48" class="outline-2">
-<h2 id="org8f04d48">はじめに</h2>
-<div class="outline-text-2" id="text-org8f04d48">
+<div id="outline-container-org9ea1130" class="outline-2">
+<h2 id="org9ea1130">はじめに</h2>
+<div class="outline-text-2" id="text-org9ea1130">
 <p>
-Emacs で頻繁に使う基本的な2つの操作を改善しました。1つめはカーソルの行頭移動 <kbd>C-a</kbd> に関する機能です。2つめはバッファ全範囲の一括インデントです。
+Emacs で頻繁に使う行頭移動 <kbd>C-a</kbd> を改善しました。
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgb663885" class="outline-2">
-<h2 id="orgb663885">行頭移動 <kbd>C-a</kbd> の改善</h2>
-<div class="outline-text-2" id="text-orgb663885">
+<div id="outline-container-orgeb78f42" class="outline-2">
+<h2 id="orgeb78f42">行頭移動 <kbd>C-a</kbd> の改善</h2>
+<div class="outline-text-2" id="text-orgeb78f42">
 <p>
 Emacs でカーソル位置を行頭に移動させる場合 <kbd>C-a</kbd> と入力します。これは <code>move-beginning-of-line</code> という機能で、インデントに関わらずカーソルは左端まで移動します。しかしながら本当に実現したい操作は「行の空白以外の最初の文字への移動」であることがほとんどでした。今までは <kbd>C-a</kbd> <kbd>TAB</kbd> で行の左端に移動 → 空白以外の最初の文字に移動を実現していました。
 </p>
@@ -83,27 +109,27 @@ Emacs でカーソル位置を行頭に移動させる場合 <kbd>C-a</kbd> と�
 </p>
 <blockquote>
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #6699CC;">(</span><span style="color: #C594C5;">defun</span> <span style="color: #6699CC;">+beginning-of-line</span> <span style="color: #E27E8D;">(</span>arg<span style="color: #E27E8D;">)</span>
-  <span style="color: #8b969e;">"Move point back to indentation of beginning of line.</span>
+<pre class="src src-elisp"><span style="color: #ffffff;">(</span><span style="color: #b6a0ff; font-weight: bold;">defun</span> <span style="color: #feacd0;">+beginning-of-line</span> <span style="color: #ff66ff;">(</span>arg<span style="color: #ff66ff;">)</span>
+  <span style="color: #9ac8e0; font-style: italic;">"Move point back to indentation of beginning of line.</span>
 
-<span style="color: #8b969e;">Move point to the first non-whitespace character on this line. If</span>
-<span style="color: #8b969e;">point is already there, move to the beginning of the line.</span>
-<span style="color: #8b969e;">Effectively toggle between the first non-whitespace character and</span>
-<span style="color: #8b969e;">the beginning of the line.</span>
+<span style="color: #9ac8e0; font-style: italic;">Move point to the first non-whitespace character on this line. If</span>
+<span style="color: #9ac8e0; font-style: italic;">point is already there, move to the beginning of the line.</span>
+<span style="color: #9ac8e0; font-style: italic;">Effectively toggle between the first non-whitespace character and</span>
+<span style="color: #9ac8e0; font-style: italic;">the beginning of the line.</span>
 
-<span style="color: #8b969e;">If ARG is not nil, move forward ARG lines first. If point reaches</span>
-<span style="color: #8b969e;">the beginning or end of the buffer, stop there."</span>
-  <span style="color: #E27E8D;">(</span><span style="color: #C594C5;">interactive</span> <span style="color: #99C794;">"P"</span><span style="color: #E27E8D;">)</span>
-  <span style="color: #E27E8D;">(</span><span style="color: #C594C5;">when</span> <span style="color: #99C794;">(</span>numberp arg<span style="color: #99C794;">)</span>
-    <span style="color: #99C794;">(</span><span style="color: #C594C5;">let</span> <span style="color: #C594C5;">(</span><span style="color: #5FB3B3;">(</span>line-move-visual nil<span style="color: #5FB3B3;">)</span><span style="color: #C594C5;">)</span>
-      <span style="color: #C594C5;">(</span>forward-line arg<span style="color: #C594C5;">)</span><span style="color: #99C794;">)</span><span style="color: #E27E8D;">)</span>
+<span style="color: #9ac8e0; font-style: italic;">If ARG is not nil, move forward ARG lines first. If point reaches</span>
+<span style="color: #9ac8e0; font-style: italic;">the beginning or end of the buffer, stop there."</span>
+  <span style="color: #ff66ff;">(</span><span style="color: #b6a0ff; font-weight: bold;">interactive</span> <span style="color: #79a8ff;">"P"</span><span style="color: #ff66ff;">)</span>
+  <span style="color: #ff66ff;">(</span><span style="color: #b6a0ff; font-weight: bold;">when</span> <span style="color: #00eff0;">(</span>numberp arg<span style="color: #00eff0;">)</span>
+    <span style="color: #00eff0;">(</span><span style="color: #b6a0ff; font-weight: bold;">let</span> <span style="color: #ff6b55;">(</span><span style="color: #efef00;">(</span>line-move-visual nil<span style="color: #efef00;">)</span><span style="color: #ff6b55;">)</span>
+      <span style="color: #ff6b55;">(</span>forward-line arg<span style="color: #ff6b55;">)</span><span style="color: #00eff0;">)</span><span style="color: #ff66ff;">)</span>
 
-  <span style="color: #E27E8D;">(</span><span style="color: #C594C5;">let</span> <span style="color: #99C794;">(</span><span style="color: #C594C5;">(</span>orig-point <span style="color: #5FB3B3;">(</span>point<span style="color: #5FB3B3;">)</span><span style="color: #C594C5;">)</span><span style="color: #99C794;">)</span>
-    <span style="color: #99C794;">(</span>back-to-indentation<span style="color: #99C794;">)</span>
-    <span style="color: #99C794;">(</span><span style="color: #C594C5;">when</span> <span style="color: #C594C5;">(</span>= orig-point <span style="color: #5FB3B3;">(</span>point<span style="color: #5FB3B3;">)</span><span style="color: #C594C5;">)</span>
-      <span style="color: #C594C5;">(</span>move-beginning-of-line 1<span style="color: #C594C5;">)</span><span style="color: #99C794;">)</span><span style="color: #E27E8D;">)</span><span style="color: #6699CC;">)</span>
+  <span style="color: #ff66ff;">(</span><span style="color: #b6a0ff; font-weight: bold;">let</span> <span style="color: #00eff0;">(</span><span style="color: #ff6b55;">(</span>orig-point <span style="color: #efef00;">(</span>point<span style="color: #efef00;">)</span><span style="color: #ff6b55;">)</span><span style="color: #00eff0;">)</span>
+    <span style="color: #00eff0;">(</span>back-to-indentation<span style="color: #00eff0;">)</span>
+    <span style="color: #00eff0;">(</span><span style="color: #b6a0ff; font-weight: bold;">when</span> <span style="color: #ff6b55;">(</span>= orig-point <span style="color: #efef00;">(</span>point<span style="color: #efef00;">)</span><span style="color: #ff6b55;">)</span>
+      <span style="color: #ff6b55;">(</span>move-beginning-of-line 1<span style="color: #ff6b55;">)</span><span style="color: #00eff0;">)</span><span style="color: #ff66ff;">)</span><span style="color: #ffffff;">)</span>
 
-<span style="color: #6699CC;">(</span>global-set-key <span style="color: #E27E8D;">[</span>remap move-beginning-of-line<span style="color: #E27E8D;">]</span> '+beginning-of-line<span style="color: #6699CC;">)</span>
+<span style="color: #ffffff;">(</span>global-set-key <span style="color: #ff66ff;">[</span>remap move-beginning-of-line<span style="color: #ff66ff;">]</span> '+beginning-of-line<span style="color: #ffffff;">)</span>
 </pre>
 </div>
 </blockquote>
@@ -123,27 +149,27 @@ Emacs でカーソル位置を行頭に移動させる場合 <kbd>C-a</kbd> と�
 これは理想的なふるまいです。結局 <code>init.el</code> には次のように追記しました。上の4番目の機能を削除しただけです。
 </p>
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #6699CC;">(</span><span style="color: #C594C5;">defun</span> <span style="color: #6699CC;">my-move-beginning-of-line</span> <span style="color: #E27E8D;">()</span>
-  <span style="color: #8b969e;">"Move point back to indentation of beginning of line.</span>
+<pre class="src src-elisp"><span style="color: #ffffff;">(</span><span style="color: #b6a0ff; font-weight: bold;">defun</span> <span style="color: #feacd0;">my-move-beginning-of-line</span> <span style="color: #ff66ff;">()</span>
+  <span style="color: #9ac8e0; font-style: italic;">"Move point back to indentation of beginning of line.</span>
 
-<span style="color: #8b969e;">Move point to the first non-whitespace character on this line. If</span>
-<span style="color: #8b969e;">point is already there, move to the beginning of the line.</span>
-<span style="color: #8b969e;">Effectively toggle between the first non-whitespace character and</span>
-<span style="color: #8b969e;">the beginning of the line."</span>
-  <span style="color: #E27E8D;">(</span><span style="color: #C594C5;">interactive</span><span style="color: #E27E8D;">)</span>
-  <span style="color: #E27E8D;">(</span><span style="color: #C594C5;">let</span> <span style="color: #99C794;">(</span><span style="color: #C594C5;">(</span>orig-point <span style="color: #5FB3B3;">(</span>point<span style="color: #5FB3B3;">)</span><span style="color: #C594C5;">)</span><span style="color: #99C794;">)</span>
-    <span style="color: #99C794;">(</span>back-to-indentation<span style="color: #99C794;">)</span>
-    <span style="color: #99C794;">(</span><span style="color: #C594C5;">when</span> <span style="color: #C594C5;">(</span>= orig-point <span style="color: #5FB3B3;">(</span>point<span style="color: #5FB3B3;">)</span><span style="color: #C594C5;">)</span>
-      <span style="color: #C594C5;">(</span>move-beginning-of-line 1<span style="color: #C594C5;">)</span><span style="color: #99C794;">)</span><span style="color: #E27E8D;">)</span><span style="color: #6699CC;">)</span>
-<span style="color: #6699CC;">(</span>global-set-key <span style="color: #E27E8D;">(</span>kbd <span style="color: #99C794;">"C-a"</span><span style="color: #E27E8D;">)</span> 'my-move-beginning-of-line<span style="color: #6699CC;">)</span>
+<span style="color: #9ac8e0; font-style: italic;">Move point to the first non-whitespace character on this line. If</span>
+<span style="color: #9ac8e0; font-style: italic;">point is already there, move to the beginning of the line.</span>
+<span style="color: #9ac8e0; font-style: italic;">Effectively toggle between the first non-whitespace character and</span>
+<span style="color: #9ac8e0; font-style: italic;">the beginning of the line."</span>
+  <span style="color: #ff66ff;">(</span><span style="color: #b6a0ff; font-weight: bold;">interactive</span><span style="color: #ff66ff;">)</span>
+  <span style="color: #ff66ff;">(</span><span style="color: #b6a0ff; font-weight: bold;">let</span> <span style="color: #00eff0;">(</span><span style="color: #ff6b55;">(</span>orig-point <span style="color: #efef00;">(</span>point<span style="color: #efef00;">)</span><span style="color: #ff6b55;">)</span><span style="color: #00eff0;">)</span>
+    <span style="color: #00eff0;">(</span>back-to-indentation<span style="color: #00eff0;">)</span>
+    <span style="color: #00eff0;">(</span><span style="color: #b6a0ff; font-weight: bold;">when</span> <span style="color: #ff6b55;">(</span>= orig-point <span style="color: #efef00;">(</span>point<span style="color: #efef00;">)</span><span style="color: #ff6b55;">)</span>
+      <span style="color: #ff6b55;">(</span>move-beginning-of-line 1<span style="color: #ff6b55;">)</span><span style="color: #00eff0;">)</span><span style="color: #ff66ff;">)</span><span style="color: #ffffff;">)</span>
+<span style="color: #ffffff;">(</span>global-set-key <span style="color: #ff66ff;">(</span>kbd <span style="color: #79a8ff;">"C-a"</span><span style="color: #ff66ff;">)</span> 'my-move-beginning-of-line<span style="color: #ffffff;">)</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org4f70d49" class="outline-2">
-<h2 id="org4f70d49">バッファ全範囲の一括インデント</h2>
-<div class="outline-text-2" id="text-org4f70d49">
+<div id="outline-container-org657e519" class="outline-2">
+<h2 id="org657e519">バッファ全範囲の一括インデント</h2>
+<div class="outline-text-2" id="text-org657e519">
 <p>
 バッファ全体を一括インデントするとき <kbd>C-x</kbd> <kbd>h</kbd> (mark-whole-buffer) でバッファの全範囲を選択した後 <kbd>TAB</kbd> または <kbd>C-M-\</kbd> で一括インデントできます。しかしながらこの操作はカーソルの位置がバッファの先頭に移動してしまうため、インデントの後にもとの編集位置までもどる手間がかかります。
 </p>
@@ -152,36 +178,36 @@ Emacs でカーソル位置を行頭に移動させる場合 <kbd>C-a</kbd> と�
 カーソルの位置は維持したまま全範囲を一括インデントするために、 <code>init.el</code> に次のように追記しました。 <kbd>C-x</kbd> <kbd>TAB</kbd> にバインディングしています。
 </p>
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #6699CC;">(</span><span style="color: #C594C5;">defun</span> <span style="color: #6699CC;">my-indent-whole-buffer</span> <span style="color: #E27E8D;">()</span>
-  <span style="color: #8b969e;">"Indent all lines in the buffer."</span>
-  <span style="color: #E27E8D;">(</span><span style="color: #C594C5;">interactive</span><span style="color: #E27E8D;">)</span>
-  <span style="color: #E27E8D;">(</span>indent-region <span style="color: #99C794;">(</span>point-min<span style="color: #99C794;">)</span> <span style="color: #99C794;">(</span>point-max<span style="color: #99C794;">)</span><span style="color: #E27E8D;">)</span><span style="color: #6699CC;">)</span>
-<span style="color: #6699CC;">(</span>global-set-key <span style="color: #E27E8D;">(</span>kbd <span style="color: #99C794;">"C-x TAB"</span><span style="color: #E27E8D;">)</span> 'my-indent-whole-buffer<span style="color: #6699CC;">)</span>
+<pre class="src src-elisp"><span style="color: #ffffff;">(</span><span style="color: #b6a0ff; font-weight: bold;">defun</span> <span style="color: #feacd0;">my-indent-whole-buffer</span> <span style="color: #ff66ff;">()</span>
+  <span style="color: #9ac8e0; font-style: italic;">"Indent all lines in the buffer."</span>
+  <span style="color: #ff66ff;">(</span><span style="color: #b6a0ff; font-weight: bold;">interactive</span><span style="color: #ff66ff;">)</span>
+  <span style="color: #ff66ff;">(</span>indent-region <span style="color: #00eff0;">(</span>point-min<span style="color: #00eff0;">)</span> <span style="color: #00eff0;">(</span>point-max<span style="color: #00eff0;">)</span><span style="color: #ff66ff;">)</span><span style="color: #ffffff;">)</span>
+<span style="color: #ffffff;">(</span>global-set-key <span style="color: #ff66ff;">(</span>kbd <span style="color: #79a8ff;">"C-x TAB"</span><span style="color: #ff66ff;">)</span> 'my-indent-whole-buffer<span style="color: #ffffff;">)</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgf6e6740" class="outline-2">
-<h2 id="orgf6e6740">おわりに</h2>
-<div class="outline-text-2" id="text-orgf6e6740">
+<div id="outline-container-org1b90889" class="outline-2">
+<h2 id="org1b90889">おわりに</h2>
+<div class="outline-text-2" id="text-org1b90889">
 <p>
 上の2つは小規模な改善ですが、どちらも頻繁に用いる機能なので重要な改善でした。さまざまなパッケージをインストールして強力な Emacs を作ることも楽しいですが、このような小さな改善を積み重ねるのも楽しいことです。
 </p>
 </div>
 </div>
 <div class="taglist"></div>]]></description>
-  <link>https://x9hrrdys.github.io/improve_c_a_and_c_x_h_tab.html</link>
-  <guid>https://x9hrrdys.github.io/improve_c_a_and_c_x_h_tab.html</guid>
+  <link>https://x9hrrdys.github.io/improve_move_beginning_of_line.html</link>
+  <guid>https://x9hrrdys.github.io/improve_move_beginning_of_line.html</guid>
   <pubDate>Sat, 20 Aug 2022 09:00:00 +0900</pubDate>
 </item>
 <item>
   <title><![CDATA[Emacs と Notmuch でメールを管理する]]></title>
   <description><![CDATA[
 
-<div id="outline-container-org421c67d" class="outline-2">
-<h2 id="org421c67d">はじめに</h2>
-<div class="outline-text-2" id="text-org421c67d">
+<div id="outline-container-org717ff0f" class="outline-2">
+<h2 id="org717ff0f">はじめに</h2>
+<div class="outline-text-2" id="text-org717ff0f">
 <p>
 Emacs でメールを管理する方法はいくつかありますが、タグベース管理ができる Notmuch を採用しました。以前は Mac 標準の Mail.app を使用していましたがそれと比較して次のメリットがあります。
 </p>
@@ -198,9 +224,9 @@ Emacs でメールを管理する方法はいくつかありますが、タグ�
 </p>
 </div>
 
-<div id="outline-container-org1b51805" class="outline-3">
-<h3 id="org1b51805">Maildir 形式と Mbox 形式について</h3>
-<div class="outline-text-3" id="text-org1b51805">
+<div id="outline-container-org6a77e21" class="outline-3">
+<h3 id="org6a77e21">Maildir 形式と Mbox 形式について</h3>
+<div class="outline-text-3" id="text-org6a77e21">
 <p>
 メールの保存形式にはおもに次の2つがあります。
 </p>
@@ -216,9 +242,9 @@ Notmuch は Maildir 形式のみに対応しています。Maildir 形式はメ�
 </div>
 </div>
 
-<div id="outline-container-org1248180" class="outline-3">
-<h3 id="org1248180">POP3 と IMAP について</h3>
-<div class="outline-text-3" id="text-org1248180">
+<div id="outline-container-org39dc097" class="outline-3">
+<h3 id="org39dc097">POP3 と IMAP について</h3>
+<div class="outline-text-3" id="text-org39dc097">
 <p>
 メールにアクセスする形式にはおもに次の2つがあります。
 </p>
@@ -234,9 +260,9 @@ POP3 は郵便局にあるメールを郵便屋さんが自宅まで届けてく
 </div>
 </div>
 
-<div id="outline-container-orgeef89ce" class="outline-2">
-<h2 id="orgeef89ce">使用するソフトフェア</h2>
-<div class="outline-text-2" id="text-orgeef89ce">
+<div id="outline-container-orge7e2032" class="outline-2">
+<h2 id="orge7e2032">使用するソフトフェア</h2>
+<div class="outline-text-2" id="text-orge7e2032">
 <p>
 Mail.app など通常のメールソフトは受信・インデックス作成・閲覧・送信などを一括で行いますが、 Emacs でメール環境を整える場合はそれらの機能を別々にインストール、設定する必要があります。今回使用するものは次の通りです。
 </p>
@@ -250,9 +276,9 @@ Mail.app など通常のメールソフトは受信・インデックス作成�
 </div>
 </div>
 
-<div id="outline-container-org17d77c9" class="outline-2">
-<h2 id="org17d77c9">準備: メールの保存場所の作成</h2>
-<div class="outline-text-2" id="text-org17d77c9">
+<div id="outline-container-org65d1319" class="outline-2">
+<h2 id="org65d1319">準備: メールの保存場所の作成</h2>
+<div class="outline-text-2" id="text-org65d1319">
 <p>
 まずは Maildir 形式のメールの保存場所を用意します。
 </p>
@@ -264,7 +290,7 @@ Mail.app など通常のメールソフトは受信・インデックス作成�
 <li><p>
 メールアカウントが2つ(<code>[account1], [account2]</code>)ある場合のディレクトリのツリーは次のようになります。 <code>sent</code> と <code>drafts</code> 内にもディレクトリ <code>cur, new, tmp</code> を作成します（システムが自動的に作成してくれる場合もあります）。
 </p>
-<pre class="example" id="orga94c1e5">
+<pre class="example" id="org0a58661">
 ~/.maildir
 ├── drafts
 │   ├── cur
@@ -291,13 +317,13 @@ Mail.app など通常のメールソフトは受信・インデックス作成�
 </div>
 </div>
 
-<div id="outline-container-org32fc56b" class="outline-2">
-<h2 id="org32fc56b">getmail6 でPOP3メールを受信する</h2>
-<div class="outline-text-2" id="text-org32fc56b">
+<div id="outline-container-orgec5a973" class="outline-2">
+<h2 id="orgec5a973">getmail6 でPOP3メールを受信する</h2>
+<div class="outline-text-2" id="text-orgec5a973">
 </div>
-<div id="outline-container-org5aafeb4" class="outline-3">
-<h3 id="org5aafeb4">インストール</h3>
-<div class="outline-text-3" id="text-org5aafeb4">
+<div id="outline-container-orga6df667" class="outline-3">
+<h3 id="orga6df667">インストール</h3>
+<div class="outline-text-3" id="text-orga6df667">
 <p>
 getmail6 は POP3、 IMAPメールを受信するためのプログラムです。 Python 3 で動作します。
 </p>
@@ -311,28 +337,28 @@ getmail6 は POP3、 IMAPメールを受信するためのプログラムです�
 </div>
 </div>
 
-<div id="outline-container-org8f0fe11" class="outline-3">
-<h3 id="org8f0fe11">設定</h3>
-<div class="outline-text-3" id="text-org8f0fe11">
+<div id="outline-container-orgdcbf813" class="outline-3">
+<h3 id="orgdcbf813">設定</h3>
+<div class="outline-text-3" id="text-orgdcbf813">
 <p>
 設定ファイルは <code>~.getmail/</code> 内に置きます。 <code>~/.getmail/[account1]</code>, <code>~/.getmail/[account2]</code>,&#x2026; のようにアカウントごとにファイルを作成します。
 設定の例は次の通りです（参考: <a href="https://getmail6.org/configuration.html#configuring">getmail documentation</a> ）。
 </p>
 <div class="org-src-container">
-<pre class="src src-conf">[<span style="color: #FAC863;">retriever</span>]
-<span style="color: #F99157;">type</span> = SimplePOP3SSLRetriever
-<span style="color: #F99157;">server</span> = [&#21463;&#20449;&#12469;&#12540;&#12496;&#12540;]
-<span style="color: #F99157;">username</span> = [&#12518;&#12540;&#12470;&#12540;&#21517;]
-<span style="color: #F99157;">port</span> = 995
-<span style="color: #F99157;">password</span> = [&#12497;&#12473;&#12527;&#12540;&#12489;]
+<pre class="src src-conf">[<span style="color: #6ae4b9; font-weight: bold;">retriever</span>]
+<span style="color: #00d3d0;">type</span> = SimplePOP3SSLRetriever
+<span style="color: #00d3d0;">server</span> = [&#21463;&#20449;&#12469;&#12540;&#12496;&#12540;]
+<span style="color: #00d3d0;">username</span> = [&#12518;&#12540;&#12470;&#12540;&#21517;]
+<span style="color: #00d3d0;">port</span> = 995
+<span style="color: #00d3d0;">password</span> = [&#12497;&#12473;&#12527;&#12540;&#12489;]
 
-[<span style="color: #FAC863;">destination</span>]
-<span style="color: #F99157;">type</span> = Maildir
-<span style="color: #F99157;">path</span> = ~/.maildir/[account1]/
+[<span style="color: #6ae4b9; font-weight: bold;">destination</span>]
+<span style="color: #00d3d0;">type</span> = Maildir
+<span style="color: #00d3d0;">path</span> = ~/.maildir/[account1]/
 
-[<span style="color: #FAC863;">options</span>]
-<span style="color: #F99157;">read_all</span> = false <span style="color: #65737E;"># </span><span style="color: #65737E;">&#19968;&#24230;&#21463;&#20449;&#12375;&#12383;&#12513;&#12540;&#12523;&#12434;&#20877;&#12403;&#21463;&#20449;&#12377;&#12427;&#12371;&#12392;&#12434;&#38450;&#12368;</span>
-<span style="color: #F99157;">delete_after</span> = 30 <span style="color: #65737E;"># </span><span style="color: #65737E;">&#21463;&#20449;&#12375;&#12390;30&#26085;&#24460;&#12395;&#21066;&#38500;</span>
+[<span style="color: #6ae4b9; font-weight: bold;">options</span>]
+<span style="color: #00d3d0;">read_all</span> = false <span style="color: #ff9f80; font-style: italic;"># </span><span style="color: #ff9f80; font-style: italic;">&#19968;&#24230;&#21463;&#20449;&#12375;&#12383;&#12513;&#12540;&#12523;&#12434;&#20877;&#12403;&#21463;&#20449;&#12377;&#12427;&#12371;&#12392;&#12434;&#38450;&#12368;</span>
+<span style="color: #00d3d0;">delete_after</span> = 30 <span style="color: #ff9f80; font-style: italic;"># </span><span style="color: #ff9f80; font-style: italic;">&#21463;&#20449;&#12375;&#12390;30&#26085;&#24460;&#12395;&#21066;&#38500;</span>
 </pre>
 </div>
 <p>
@@ -341,14 +367,14 @@ getmail6 は POP3、 IMAPメールを受信するためのプログラムです�
 </div>
 </div>
 
-<div id="outline-container-orgaef2377" class="outline-3">
-<h3 id="orgaef2377">メールの受信</h3>
-<div class="outline-text-3" id="text-orgaef2377">
+<div id="outline-container-org93cf132" class="outline-3">
+<h3 id="org93cf132">メールの受信</h3>
+<div class="outline-text-3" id="text-org93cf132">
 <p>
 ターミナルで
 </p>
 <div class="org-src-container">
-<pre class="src src-shell">getmail -r ~/.getmail/<span style="color: #6699CC;">[</span>account1<span style="color: #6699CC;">]</span> -r ~/.getmail/<span style="color: #6699CC;">[</span>account2<span style="color: #6699CC;">]</span>
+<pre class="src src-shell">getmail -r ~/.getmail/<span style="color: #ffffff;">[</span>account1<span style="color: #ffffff;">]</span> -r ~/.getmail/<span style="color: #ffffff;">[</span>account2<span style="color: #ffffff;">]</span>
 </pre>
 </div>
 <p>
@@ -358,13 +384,13 @@ getmail6 は POP3、 IMAPメールを受信するためのプログラムです�
 </div>
 </div>
 
-<div id="outline-container-org3e7322e" class="outline-2">
-<h2 id="org3e7322e">Notmuch</h2>
-<div class="outline-text-2" id="text-org3e7322e">
+<div id="outline-container-orgc5a5d72" class="outline-2">
+<h2 id="orgc5a5d72">Notmuch</h2>
+<div class="outline-text-2" id="text-orgc5a5d72">
 </div>
-<div id="outline-container-org754fa5b" class="outline-3">
-<h3 id="org754fa5b">インストール</h3>
-<div class="outline-text-3" id="text-org754fa5b">
+<div id="outline-container-orgadefc36" class="outline-3">
+<h3 id="orgadefc36">インストール</h3>
+<div class="outline-text-3" id="text-orgadefc36">
 <p>
 Notmuch は受信したメールのインデックス作成、タグ処理、検索を行うためのプログラムです。メールファイルそのものを書き換えたり移動させたりする機能はありません。
 </p>
@@ -378,30 +404,30 @@ Notmuch は受信したメールのインデックス作成、タグ処理、検
 </div>
 </div>
 
-<div id="outline-container-orgdc26f52" class="outline-3">
-<h3 id="orgdc26f52">設定</h3>
-<div class="outline-text-3" id="text-orgdc26f52">
+<div id="outline-container-org007d360" class="outline-3">
+<h3 id="org007d360">設定</h3>
+<div class="outline-text-3" id="text-org007d360">
 <p>
 初期設定を行います。ターミナルにはじめて <code>notmuch</code> と入力すると、 <code>~/.notmuch-config</code> が作成されます。対話形式の質問に答えることで設定を行うこともできますが <code>~/.notmuch-config</code> を直接編集することもできます（参考: <a href="https://notmuchmail.org/getting-started/">notmuch: Getting Started with Notmuch</a>）。
 </p>
 <div class="org-src-container">
-<pre class="src src-conf">[<span style="color: #FAC863;">database</span>]
-<span style="color: #F99157;">path</span>=/Users/[Mac&#12398;&#12518;&#12540;&#12470;&#12540;&#21517;]/.maildir
+<pre class="src src-conf">[<span style="color: #6ae4b9; font-weight: bold;">database</span>]
+<span style="color: #00d3d0;">path</span>=/Users/[Mac&#12398;&#12518;&#12540;&#12470;&#12540;&#21517;]/.maildir
 
-[<span style="color: #FAC863;">user</span>]
-<span style="color: #F99157;">name</span>=[&#24046;&#20986;&#20154;&#12398;&#21517;&#21069;]
-<span style="color: #F99157;">primary_email</span>=account1@example.com
-<span style="color: #F99157;">other_email</span>=account2@example.com
+[<span style="color: #6ae4b9; font-weight: bold;">user</span>]
+<span style="color: #00d3d0;">name</span>=[&#24046;&#20986;&#20154;&#12398;&#21517;&#21069;]
+<span style="color: #00d3d0;">primary_email</span>=account1@example.com
+<span style="color: #00d3d0;">other_email</span>=account2@example.com
 
-[<span style="color: #FAC863;">new</span>]
-<span style="color: #F99157;">tags</span>=unread;inbox; <span style="color: #65737E;"># </span><span style="color: #65737E;">&#26410;&#35501;&#12513;&#12540;&#12523;&#12395;&#33258;&#21205;&#30340;&#12395;&#20184;&#19982;&#12373;&#12428;&#12427;&#12479;&#12464;&#12434;&#25351;&#23450;</span>
-<span style="color: #F99157;">ignore</span>=
+[<span style="color: #6ae4b9; font-weight: bold;">new</span>]
+<span style="color: #00d3d0;">tags</span>=unread;inbox; <span style="color: #ff9f80; font-style: italic;"># </span><span style="color: #ff9f80; font-style: italic;">&#26410;&#35501;&#12513;&#12540;&#12523;&#12395;&#33258;&#21205;&#30340;&#12395;&#20184;&#19982;&#12373;&#12428;&#12427;&#12479;&#12464;&#12434;&#25351;&#23450;</span>
+<span style="color: #00d3d0;">ignore</span>=
 
-[<span style="color: #FAC863;">search</span>]
-<span style="color: #F99157;">exclude_tags</span>=spam; <span style="color: #65737E;"># </span><span style="color: #65737E;">&#12487;&#12501;&#12457;&#12523;&#12488;&#12391;&#26908;&#32034;&#32080;&#26524;&#12363;&#12425;&#38500;&#22806;&#12377;&#12427;&#12479;&#12464;&#12398;&#25351;&#23450;</span>
+[<span style="color: #6ae4b9; font-weight: bold;">search</span>]
+<span style="color: #00d3d0;">exclude_tags</span>=spam; <span style="color: #ff9f80; font-style: italic;"># </span><span style="color: #ff9f80; font-style: italic;">&#12487;&#12501;&#12457;&#12523;&#12488;&#12391;&#26908;&#32034;&#32080;&#26524;&#12363;&#12425;&#38500;&#22806;&#12377;&#12427;&#12479;&#12464;&#12398;&#25351;&#23450;</span>
 
-[<span style="color: #FAC863;">maildir</span>]
-<span style="color: #F99157;">synchronize_flags</span>=true
+[<span style="color: #6ae4b9; font-weight: bold;">maildir</span>]
+<span style="color: #00d3d0;">synchronize_flags</span>=true
 </pre>
 </div>
 
@@ -409,7 +435,7 @@ Notmuch は受信したメールのインデックス作成、タグ処理、検
 Notmuch の検索は日本語にも対応していますが設定が必要です。 <code>~/.zshrc</code> に環境変数を加えます（参考: <a href="https://notmuchmail.org/howto/#index10h2">Notmuch: How to&#x2026;</a>）。
 </p>
 <div class="org-src-container">
-<pre class="src src-shell-script"><span style="color: #EC5f67;">export</span> <span style="color: #F99157;">XAPIAN_CJK_NGRAM</span>=1
+<pre class="src src-shell-script"><span style="color: #f78fe7; font-weight: bold;">export</span> <span style="color: #00d3d0;">XAPIAN_CJK_NGRAM</span>=1
 </pre>
 </div>
 <p>
@@ -424,7 +450,7 @@ Notmuch の検索は日本語にも対応していますが設定が必要です
 すでにインデックスを作成したけれども、再度インデックスを作り直したい場合は
 </p>
 <div class="org-src-container">
-<pre class="src src-shell">notmuch reindex <span style="color: #99C794;">'*'</span>
+<pre class="src src-shell">notmuch reindex <span style="color: #79a8ff;">'*'</span>
 </pre>
 </div>
 <p>
@@ -433,29 +459,29 @@ Notmuch の検索は日本語にも対応していますが設定が必要です
 </div>
 </div>
 
-<div id="outline-container-orgd0b0af6" class="outline-3">
-<h3 id="orgd0b0af6">ターミナル上でメールを検索してみる</h3>
-<div class="outline-text-3" id="text-orgd0b0af6">
+<div id="outline-container-orga46f8db" class="outline-3">
+<h3 id="orga46f8db">ターミナル上でメールを検索してみる</h3>
+<div class="outline-text-3" id="text-orga46f8db">
 <p>
 ここまでの設定で Notmuch がうまく機能しているか確かめてみます。ターミナルでメールを検索してみます（参考: <a href="https://notmuchmail.org/doc/latest/man7/notmuch-search-terms.html">notmuch-search-terms</a>）。
 </p>
 <div class="org-src-container">
-<pre class="src src-shell">notmuch search tag:new <span style="color: #65737E;"># </span><span style="color: #65737E;">&#26410;&#35501;&#12513;&#12540;&#12523;&#65288;&#12479;&#12464; new &#12434;&#21547;&#12416;&#12513;&#12540;&#12523;&#65289;&#12434;&#26908;&#32034;</span>
-notmuch search date:today <span style="color: #65737E;"># </span><span style="color: #65737E;">&#20170;&#26085;&#21463;&#20449;&#12375;&#12383;&#12513;&#12540;&#12523;&#12434;&#26908;&#32034;</span>
-notmuch search from:&#23665; AND date:2020..today <span style="color: #65737E;"># </span><span style="color: #65737E;">&#24046;&#20986;&#21517;&#12395;&#12300;&#23665;&#12301;&#12434;&#21547;&#12416;2020&#24180;&#12363;&#12425;&#20170;&#26085;&#12414;&#12391;&#12398;&#12513;&#12540;&#12523;&#12434;&#26908;&#32034;</span>
+<pre class="src src-shell">notmuch search tag:new <span style="color: #ff9f80; font-style: italic;"># </span><span style="color: #ff9f80; font-style: italic;">&#26410;&#35501;&#12513;&#12540;&#12523;&#65288;&#12479;&#12464; new &#12434;&#21547;&#12416;&#12513;&#12540;&#12523;&#65289;&#12434;&#26908;&#32034;</span>
+notmuch search date:today <span style="color: #ff9f80; font-style: italic;"># </span><span style="color: #ff9f80; font-style: italic;">&#20170;&#26085;&#21463;&#20449;&#12375;&#12383;&#12513;&#12540;&#12523;&#12434;&#26908;&#32034;</span>
+notmuch search from:&#23665; AND date:2020..today <span style="color: #ff9f80; font-style: italic;"># </span><span style="color: #ff9f80; font-style: italic;">&#24046;&#20986;&#21517;&#12395;&#12300;&#23665;&#12301;&#12434;&#21547;&#12416;2020&#24180;&#12363;&#12425;&#20170;&#26085;&#12414;&#12391;&#12398;&#12513;&#12540;&#12523;&#12434;&#26908;&#32034;</span>
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org86e7681" class="outline-2">
-<h2 id="org86e7681">msmtp でメールを送信する</h2>
-<div class="outline-text-2" id="text-org86e7681">
+<div id="outline-container-orgcc1b377" class="outline-2">
+<h2 id="orgcc1b377">msmtp でメールを送信する</h2>
+<div class="outline-text-2" id="text-orgcc1b377">
 </div>
-<div id="outline-container-org6afa151" class="outline-3">
-<h3 id="org6afa151">インストール</h3>
-<div class="outline-text-3" id="text-org6afa151">
+<div id="outline-container-org0897918" class="outline-3">
+<h3 id="org0897918">インストール</h3>
+<div class="outline-text-3" id="text-org0897918">
 <p>
 msmtp はメールを送信するためのプログラムです。
 </p>
@@ -469,21 +495,21 @@ msmtp はメールを送信するためのプログラムです。
 </div>
 </div>
 
-<div id="outline-container-org317a2b5" class="outline-3">
-<h3 id="org317a2b5">設定</h3>
-<div class="outline-text-3" id="text-org317a2b5">
+<div id="outline-container-org0d11279" class="outline-3">
+<h3 id="org0d11279">設定</h3>
+<div class="outline-text-3" id="text-org0d11279">
 <p>
 設定ファイル <code>~/.msmtprc</code> に複数のアカウントの設定をまとめて記述します（参考: <a href="https://marlam.de/msmtp/msmtp.html#A-user-configuration-file">msmtp: Examples: A user configuration file</a>）。
 </p>
 <div class="org-src-container">
-<pre class="src src-conf"><span style="color: #65737E;"># </span><span style="color: #65737E;">&#12377;&#12409;&#12390;&#12398;&#12450;&#12459;&#12454;&#12531;&#12488;&#12395;&#20849;&#36890;&#12375;&#12383;&#21021;&#26399;&#35373;&#23450;</span>
+<pre class="src src-conf"><span style="color: #ff9f80; font-style: italic;"># </span><span style="color: #ff9f80; font-style: italic;">&#12377;&#12409;&#12390;&#12398;&#12450;&#12459;&#12454;&#12531;&#12488;&#12395;&#20849;&#36890;&#12375;&#12383;&#21021;&#26399;&#35373;&#23450;</span>
 defaults
 auth on
 tls on
 logfile ~/.msmtp.log
 
-<span style="color: #65737E;"># </span><span style="color: #65737E;">&#20197;&#19979;&#12289;&#12450;&#12459;&#12454;&#12531;&#12488;&#12372;&#12392;&#12398;&#35373;&#23450;</span>
-<span style="color: #65737E;"># </span><span style="color: #65737E;">[account1] &#12398;&#35373;&#23450;</span>
+<span style="color: #ff9f80; font-style: italic;"># </span><span style="color: #ff9f80; font-style: italic;">&#20197;&#19979;&#12289;&#12450;&#12459;&#12454;&#12531;&#12488;&#12372;&#12392;&#12398;&#35373;&#23450;</span>
+<span style="color: #ff9f80; font-style: italic;"># </span><span style="color: #ff9f80; font-style: italic;">[account1] &#12398;&#35373;&#23450;</span>
 account [account1]
 host smtp1.example.com
 port 587
@@ -491,7 +517,7 @@ from account1@example.com
 user [&#12518;&#12540;&#12470;&#12540;&#21517;1]
 password [&#12497;&#12473;&#12527;&#12540;&#12489;1]
 
-<span style="color: #65737E;"># </span><span style="color: #65737E;">[account2] &#12398;&#35373;&#23450;</span>
+<span style="color: #ff9f80; font-style: italic;"># </span><span style="color: #ff9f80; font-style: italic;">[account2] &#12398;&#35373;&#23450;</span>
 account [account2]
 host smtp2.example.com
 port 465
@@ -510,9 +536,9 @@ account default : [account1]
 </div>
 </div>
 
-<div id="outline-container-orgd6fde2a" class="outline-2">
-<h2 id="orgd6fde2a">Emacs の notmuch</h2>
-<div class="outline-text-2" id="text-orgd6fde2a">
+<div id="outline-container-org564e9d5" class="outline-2">
+<h2 id="org564e9d5">Emacs の notmuch</h2>
+<div class="outline-text-2" id="text-org564e9d5">
 <p>
 Emacs の notmuch では受信したメールの閲覧、検索、タグ処理、メールの作成と送信ができます。 <kbd>M-x package-install notmuch</kbd> でインストールできます。
 </p>
@@ -527,9 +553,9 @@ notmuch には3つのモードが備わっています。
 </ul>
 </div>
 
-<div id="outline-container-orgbfbc684" class="outline-3">
-<h3 id="orgbfbc684">作業の流れの例</h3>
-<div class="outline-text-3" id="text-orgbfbc684">
+<div id="outline-container-orge7c5c40" class="outline-3">
+<h3 id="orge7c5c40">作業の流れの例</h3>
+<div class="outline-text-3" id="text-orge7c5c40">
 <ul class="org-ul">
 <li><kbd>M-x notmuch</kbd> で notmuch-hello バッファが表示される。 <kbd>G</kbd> でインデックスの更新。新しいメールには <code>unread</code> と <code>inbox</code> のタグが自動的につく。</li>
 <li><kbd>j</kbd> <kbd>u</kbd> で notmuch-search モードの新しいバッファが開き、未読メッセージ（ <code>unread</code> タグのメッセージ）の一覧が表示される。</li>
@@ -546,123 +572,123 @@ notmuch には3つのモードが備わっています。
 </div>
 </div>
 
-<div id="outline-container-orgc079bd7" class="outline-3">
-<h3 id="orgc079bd7">init.el の設定</h3>
-<div class="outline-text-3" id="text-orgc079bd7">
+<div id="outline-container-org0d0d1a8" class="outline-3">
+<h3 id="org0d0d1a8">init.el の設定</h3>
+<div class="outline-text-3" id="text-org0d0d1a8">
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #65737E;">;; </span><span style="color: #65737E;">&#26085;&#26412;&#35486;&#26908;&#32034;&#12398;&#12383;&#12417;&#12398;&#29872;&#22659;&#22793;&#25968;&#12398;&#35373;&#23450;</span>
-<span style="color: #6699CC;">(</span>setenv <span style="color: #99C794;">"XAPIAN_CJK_NGRAM"</span> <span style="color: #99C794;">"1"</span><span style="color: #6699CC;">)</span>
+<pre class="src src-elisp"><span style="color: #ff9f80; font-style: italic;">;; </span><span style="color: #ff9f80; font-style: italic;">&#26085;&#26412;&#35486;&#26908;&#32034;&#12398;&#12383;&#12417;&#12398;&#29872;&#22659;&#22793;&#25968;&#12398;&#35373;&#23450;</span>
+<span style="color: #ffffff;">(</span>setenv <span style="color: #79a8ff;">"XAPIAN_CJK_NGRAM"</span> <span style="color: #79a8ff;">"1"</span><span style="color: #ffffff;">)</span>
 
-<span style="color: #65737E;">;; </span><span style="color: #65737E;">message &#12487;&#12451;&#12524;&#12463;&#12488;&#12522;&#12398;&#35373;&#23450;</span>
-<span style="color: #6699CC;">(</span><span style="color: #C594C5;">setq</span> message-directory <span style="color: #99C794;">"~/.maildir"</span><span style="color: #6699CC;">)</span>
+<span style="color: #ff9f80; font-style: italic;">;; </span><span style="color: #ff9f80; font-style: italic;">message &#12487;&#12451;&#12524;&#12463;&#12488;&#12522;&#12398;&#35373;&#23450;</span>
+<span style="color: #ffffff;">(</span><span style="color: #b6a0ff; font-weight: bold;">setq</span> message-directory <span style="color: #79a8ff;">"~/.maildir"</span><span style="color: #ffffff;">)</span>
 
-<span style="color: #65737E;">;; </span><span style="color: #65737E;">&#12513;&#12540;&#12523;&#12504;&#12483;&#12480;&#12289;&#12456;&#12531;&#12505;&#12525;&#12540;&#12503;&#12398;&#35373;&#23450;</span>
-<span style="color: #6699CC;">(</span><span style="color: #C594C5;">setq</span> message-sendmail-f-is-evil t
-      message-sendmail-extra-arguments '<span style="color: #E27E8D;">(</span><span style="color: #99C794;">"--read-envelope-from"</span><span style="color: #E27E8D;">)</span>
+<span style="color: #ff9f80; font-style: italic;">;; </span><span style="color: #ff9f80; font-style: italic;">&#12513;&#12540;&#12523;&#12504;&#12483;&#12480;&#12289;&#12456;&#12531;&#12505;&#12525;&#12540;&#12503;&#12398;&#35373;&#23450;</span>
+<span style="color: #ffffff;">(</span><span style="color: #b6a0ff; font-weight: bold;">setq</span> message-sendmail-f-is-evil t
+      message-sendmail-extra-arguments '<span style="color: #ff66ff;">(</span><span style="color: #79a8ff;">"--read-envelope-from"</span><span style="color: #ff66ff;">)</span>
       mail-specify-envelope-from t
       mail-envelope-from 'header
-      message-sendmail-envelope-from 'header<span style="color: #6699CC;">)</span>
+      message-sendmail-envelope-from 'header<span style="color: #ffffff;">)</span>
 
-<span style="color: #65737E;">;; </span><span style="color: #65737E;">&#12513;&#12483;&#12475;&#12540;&#12472;&#20316;&#25104;&#26178;&#12395; CC: &#35352;&#20837;&#27396;&#12434;&#21152;&#12360;&#12427;</span>
-<span style="color: #6699CC;">(</span><span style="color: #C594C5;">setq</span> message-default-mail-headers <span style="color: #99C794;">"Cc: \n"</span><span style="color: #6699CC;">)</span>
-<span style="color: #65737E;">;; </span><span style="color: #65737E;">CC&#12392;BCC &#12434;&#21152;&#12360;&#12383;&#12356;&#22580;&#21512;&#12399;</span>
-<span style="color: #65737E;">;; </span><span style="color: #65737E;">(setq message-default-mail-headers "Cc: \nBcc: \n")</span>
+<span style="color: #ff9f80; font-style: italic;">;; </span><span style="color: #ff9f80; font-style: italic;">&#12513;&#12483;&#12475;&#12540;&#12472;&#20316;&#25104;&#26178;&#12395; CC: &#35352;&#20837;&#27396;&#12434;&#21152;&#12360;&#12427;</span>
+<span style="color: #ffffff;">(</span><span style="color: #b6a0ff; font-weight: bold;">setq</span> message-default-mail-headers <span style="color: #79a8ff;">"Cc: \n"</span><span style="color: #ffffff;">)</span>
+<span style="color: #ff9f80; font-style: italic;">;; </span><span style="color: #ff9f80; font-style: italic;">CC&#12392;BCC &#12434;&#21152;&#12360;&#12383;&#12356;&#22580;&#21512;&#12399;</span>
+<span style="color: #ff9f80; font-style: italic;">;; </span><span style="color: #ff9f80; font-style: italic;">(setq message-default-mail-headers "Cc: \nBcc: \n")</span>
 
-<span style="color: #65737E;">;; </span><span style="color: #65737E;">&#12513;&#12483;&#12475;&#12540;&#12472;&#12496;&#12483;&#12501;&#12449;&#12391; auto-fill &#12373;&#12428;&#12427;&#25991;&#23383;&#25968;&#12398;&#35373;&#23450;</span>
-<span style="color: #6699CC;">(</span><span style="color: #C594C5;">setq</span> message-fill-column 100<span style="color: #6699CC;">)</span>
+<span style="color: #ff9f80; font-style: italic;">;; </span><span style="color: #ff9f80; font-style: italic;">&#12513;&#12483;&#12475;&#12540;&#12472;&#12496;&#12483;&#12501;&#12449;&#12391; auto-fill &#12373;&#12428;&#12427;&#25991;&#23383;&#25968;&#12398;&#35373;&#23450;</span>
+<span style="color: #ffffff;">(</span><span style="color: #b6a0ff; font-weight: bold;">setq</span> message-fill-column 100<span style="color: #ffffff;">)</span>
 
-<span style="color: #65737E;">;; </span><span style="color: #65737E;">&#36865;&#20449;&#24460;&#12395;&#12496;&#12483;&#12501;&#12449;&#12434;&#38281;&#12376;&#12427;</span>
-<span style="color: #6699CC;">(</span><span style="color: #C594C5;">setq</span> message-kill-buffer-on-exit t<span style="color: #6699CC;">)</span>
+<span style="color: #ff9f80; font-style: italic;">;; </span><span style="color: #ff9f80; font-style: italic;">&#36865;&#20449;&#24460;&#12395;&#12496;&#12483;&#12501;&#12449;&#12434;&#38281;&#12376;&#12427;</span>
+<span style="color: #ffffff;">(</span><span style="color: #b6a0ff; font-weight: bold;">setq</span> message-kill-buffer-on-exit t<span style="color: #ffffff;">)</span>
 
-<span style="color: #65737E;">;; </span><span style="color: #65737E;">&#28155;&#20184;&#12501;&#12449;&#12452;&#12523;&#12398;&#20445;&#23384;&#20808;&#12398;&#21021;&#26399;&#35373;&#23450;</span>
-<span style="color: #6699CC;">(</span><span style="color: #C594C5;">setq</span> mm-default-directory <span style="color: #99C794;">"~/Downloads/"</span><span style="color: #6699CC;">)</span>
+<span style="color: #ff9f80; font-style: italic;">;; </span><span style="color: #ff9f80; font-style: italic;">&#28155;&#20184;&#12501;&#12449;&#12452;&#12523;&#12398;&#20445;&#23384;&#20808;&#12398;&#21021;&#26399;&#35373;&#23450;</span>
+<span style="color: #ffffff;">(</span><span style="color: #b6a0ff; font-weight: bold;">setq</span> mm-default-directory <span style="color: #79a8ff;">"~/Downloads/"</span><span style="color: #ffffff;">)</span>
 
-<span style="color: #65737E;">;; </span><span style="color: #65737E;">sendmail&#12289;&#36865;&#20449;&#12398;&#35373;&#23450;</span>
-<span style="color: #6699CC;">(</span><span style="color: #C594C5;">setq</span> send-mail-function 'sendmail-send-it
-      sendmail-program <span style="color: #99C794;">"/usr/local/bin/msmtp"</span><span style="color: #6699CC;">)</span>
+<span style="color: #ff9f80; font-style: italic;">;; </span><span style="color: #ff9f80; font-style: italic;">sendmail&#12289;&#36865;&#20449;&#12398;&#35373;&#23450;</span>
+<span style="color: #ffffff;">(</span><span style="color: #b6a0ff; font-weight: bold;">setq</span> send-mail-function 'sendmail-send-it
+      sendmail-program <span style="color: #79a8ff;">"/usr/local/bin/msmtp"</span><span style="color: #ffffff;">)</span>
 
-<span style="color: #65737E;">;; </span><span style="color: #65737E;">&#36865;&#20449;&#20803;&#12398;&#12467;&#12531;&#12500;&#12517;&#12540;&#12479;&#21517;&#12398;&#35373;&#23450;</span>
-<span style="color: #6699CC;">(</span><span style="color: #C594C5;">setq</span> mail-host-address <span style="color: #99C794;">"example.com"</span><span style="color: #6699CC;">)</span>
+<span style="color: #ff9f80; font-style: italic;">;; </span><span style="color: #ff9f80; font-style: italic;">&#36865;&#20449;&#20803;&#12398;&#12467;&#12531;&#12500;&#12517;&#12540;&#12479;&#21517;&#12398;&#35373;&#23450;</span>
+<span style="color: #ffffff;">(</span><span style="color: #b6a0ff; font-weight: bold;">setq</span> mail-host-address <span style="color: #79a8ff;">"example.com"</span><span style="color: #ffffff;">)</span>
 
-<span style="color: #65737E;">;; </span><span style="color: #65737E;">notmuch &#12398;&#35373;&#23450;</span>
-<span style="color: #65737E;">;; </span><span style="color: #65737E;">UI</span>
-<span style="color: #6699CC;">(</span><span style="color: #C594C5;">setq</span> notmuch-hello-sections
-      <span style="color: #65737E;">;; </span><span style="color: #65737E;">notmuch-hello &#12514;&#12540;&#12489;&#12391;&#26908;&#32034;&#12508;&#12483;&#12463;&#12473;&#12392;&#12501;&#12483;&#12479;&#12434;&#38750;&#34920;&#31034;&#12395;&#12377;&#12427;</span>
-      <span style="color: #65737E;">;; </span><span style="color: #65737E;">&#34920;&#31034;&#12373;&#12379;&#12383;&#12356;&#22580;&#21512;&#12399;&#12467;&#12513;&#12531;&#12488;&#12450;&#12454;&#12488;&#12434;&#12399;&#12378;&#12377;</span>
-      <span style="color: #E27E8D;">(</span>list #'notmuch-hello-insert-header
+<span style="color: #ff9f80; font-style: italic;">;; </span><span style="color: #ff9f80; font-style: italic;">notmuch &#12398;&#35373;&#23450;</span>
+<span style="color: #ff9f80; font-style: italic;">;; </span><span style="color: #ff9f80; font-style: italic;">UI</span>
+<span style="color: #ffffff;">(</span><span style="color: #b6a0ff; font-weight: bold;">setq</span> notmuch-hello-sections
+      <span style="color: #ff9f80; font-style: italic;">;; </span><span style="color: #ff9f80; font-style: italic;">notmuch-hello &#12514;&#12540;&#12489;&#12391;&#26908;&#32034;&#12508;&#12483;&#12463;&#12473;&#12392;&#12501;&#12483;&#12479;&#12434;&#38750;&#34920;&#31034;&#12395;&#12377;&#12427;</span>
+      <span style="color: #ff9f80; font-style: italic;">;; </span><span style="color: #ff9f80; font-style: italic;">&#34920;&#31034;&#12373;&#12379;&#12383;&#12356;&#22580;&#21512;&#12399;&#12467;&#12513;&#12531;&#12488;&#12450;&#12454;&#12488;&#12434;&#12399;&#12378;&#12377;</span>
+      <span style="color: #ff66ff;">(</span>list #'notmuch-hello-insert-header
             #'notmuch-hello-insert-saved-searches
-            <span style="color: #65737E;">;; </span><span style="color: #65737E;">#'notmuch-hello-insert-search</span>
-            <span style="color: #65737E;">;; </span><span style="color: #65737E;">#'notmuch-hello-insert-recent-searches</span>
+            <span style="color: #ff9f80; font-style: italic;">;; </span><span style="color: #ff9f80; font-style: italic;">#'notmuch-hello-insert-search</span>
+            <span style="color: #ff9f80; font-style: italic;">;; </span><span style="color: #ff9f80; font-style: italic;">#'notmuch-hello-insert-recent-searches</span>
             #'notmuch-hello-insert-alltags
-            <span style="color: #65737E;">;;</span><span style="color: #65737E;">#'notmuch-hello-insert-footer</span>
-            <span style="color: #E27E8D;">)</span><span style="color: #6699CC;">)</span>
+            <span style="color: #ff9f80; font-style: italic;">;;</span><span style="color: #ff9f80; font-style: italic;">#'notmuch-hello-insert-footer</span>
+            <span style="color: #ff66ff;">)</span><span style="color: #ffffff;">)</span>
 
-<span style="color: #6699CC;">(</span><span style="color: #C594C5;">setq</span> notmuch-show-logo nil
-      <span style="color: #65737E;">;; </span><span style="color: #65737E;">&#12513;&#12540;&#12523;&#12398;&#20214;&#25968;&#12434; "1 000" &#12391;&#12399;&#12394;&#12367; "1000" &#12392;&#34920;&#31034;&#12373;&#12379;&#12427;</span>
-      notmuch-hello-thousands-separator <span style="color: #99C794;">""</span>
-      <span style="color: #65737E;">;; </span><span style="color: #65737E;">0&#20214;&#12398;&#12479;&#12464;&#12418;&#34920;&#31034;&#12373;&#12379;&#12427;</span>
+<span style="color: #ffffff;">(</span><span style="color: #b6a0ff; font-weight: bold;">setq</span> notmuch-show-logo nil
+      <span style="color: #ff9f80; font-style: italic;">;; </span><span style="color: #ff9f80; font-style: italic;">&#12513;&#12540;&#12523;&#12398;&#20214;&#25968;&#12434; "1 000" &#12391;&#12399;&#12394;&#12367; "1000" &#12392;&#34920;&#31034;&#12373;&#12379;&#12427;</span>
+      notmuch-hello-thousands-separator <span style="color: #79a8ff;">""</span>
+      <span style="color: #ff9f80; font-style: italic;">;; </span><span style="color: #ff9f80; font-style: italic;">0&#20214;&#12398;&#12479;&#12464;&#12418;&#34920;&#31034;&#12373;&#12379;&#12427;</span>
       notmuch-show-empty-saved-searches t
-      <span style="color: #65737E;">;; </span><span style="color: #65737E;">&#26032;&#12375;&#12356;&#12513;&#12540;&#12523;&#12434;&#19978;&#12395;&#34920;&#31034;</span>
-      notmuch-search-oldest-first nil<span style="color: #6699CC;">)</span>
+      <span style="color: #ff9f80; font-style: italic;">;; </span><span style="color: #ff9f80; font-style: italic;">&#26032;&#12375;&#12356;&#12513;&#12540;&#12523;&#12434;&#19978;&#12395;&#34920;&#31034;</span>
+      notmuch-search-oldest-first nil<span style="color: #ffffff;">)</span>
 
-<span style="color: #65737E;">;; </span><span style="color: #65737E;">&#12479;&#12464;&#12395;&#38306;&#12431;&#12427;&#35373;&#23450;</span>
+<span style="color: #ff9f80; font-style: italic;">;; </span><span style="color: #ff9f80; font-style: italic;">&#12479;&#12464;&#12395;&#38306;&#12431;&#12427;&#35373;&#23450;</span>
 
-<span style="color: #65737E;">;; </span><span style="color: #65737E;">&#12450;&#12540;&#12459;&#12452;&#12502;&#12377;&#12427;&#12513;&#12540;&#12523;&#12398;&#12479;&#12464;&#20966;&#29702;&#12398;&#35373;&#23450;</span>
-<span style="color: #65737E;">;; </span><span style="color: #65737E;">inbox &#12479;&#12464;&#12364;&#12399;&#12378;&#12373;&#12428;&#12289; archived &#12479;&#12464;&#12434;&#12388;&#12369;&#12427;</span>
-<span style="color: #65737E;">;; </span><span style="color: #65737E;">&#35373;&#23450;&#12375;&#12394;&#12356;&#12392; inbox &#12479;&#12464;&#12399;&#12399;&#12378;&#12428;&#12427;&#12364; archived &#12479;&#12464;&#12399;&#12388;&#12363;&#12394;&#12356;</span>
-<span style="color: #6699CC;">(</span><span style="color: #C594C5;">setq</span> notmuch-archive-tags '<span style="color: #E27E8D;">(</span><span style="color: #99C794;">"-inbox"</span> <span style="color: #99C794;">"+archived"</span><span style="color: #E27E8D;">)</span><span style="color: #6699CC;">)</span>
+<span style="color: #ff9f80; font-style: italic;">;; </span><span style="color: #ff9f80; font-style: italic;">&#12450;&#12540;&#12459;&#12452;&#12502;&#12377;&#12427;&#12513;&#12540;&#12523;&#12398;&#12479;&#12464;&#20966;&#29702;&#12398;&#35373;&#23450;</span>
+<span style="color: #ff9f80; font-style: italic;">;; </span><span style="color: #ff9f80; font-style: italic;">inbox &#12479;&#12464;&#12364;&#12399;&#12378;&#12373;&#12428;&#12289; archived &#12479;&#12464;&#12434;&#12388;&#12369;&#12427;</span>
+<span style="color: #ff9f80; font-style: italic;">;; </span><span style="color: #ff9f80; font-style: italic;">&#35373;&#23450;&#12375;&#12394;&#12356;&#12392; inbox &#12479;&#12464;&#12399;&#12399;&#12378;&#12428;&#12427;&#12364; archived &#12479;&#12464;&#12399;&#12388;&#12363;&#12394;&#12356;</span>
+<span style="color: #ffffff;">(</span><span style="color: #b6a0ff; font-weight: bold;">setq</span> notmuch-archive-tags '<span style="color: #ff66ff;">(</span><span style="color: #79a8ff;">"-inbox"</span> <span style="color: #79a8ff;">"+archived"</span><span style="color: #ff66ff;">)</span><span style="color: #ffffff;">)</span>
 
-<span style="color: #65737E;">;; </span><span style="color: #65737E;">notmuch-archive-tags &#12392;&#21516;&#27096;&#12398;&#35373;&#23450;&#12434;</span>
-<span style="color: #65737E;">;; </span><span style="color: #65737E;">&#26082;&#35501;&#12289;&#36820;&#20449;&#12289;&#36578;&#36865;&#12513;&#12540;&#12523;&#12395;&#23550;&#12375;&#12390;&#34892;&#12358;</span>
-<span style="color: #6699CC;">(</span><span style="color: #C594C5;">setq</span> notmuch-show-mark-read-tags '<span style="color: #E27E8D;">(</span><span style="color: #99C794;">"-unread"</span><span style="color: #E27E8D;">)</span><span style="color: #6699CC;">)</span>
-<span style="color: #6699CC;">(</span><span style="color: #C594C5;">setq</span> notmuch-message-replied-tags '<span style="color: #E27E8D;">(</span><span style="color: #99C794;">"+replied"</span><span style="color: #E27E8D;">)</span><span style="color: #6699CC;">)</span>
-<span style="color: #6699CC;">(</span><span style="color: #C594C5;">setq</span> notmuch-message-forwarded-tags '<span style="color: #E27E8D;">(</span><span style="color: #99C794;">"+forwarded"</span><span style="color: #E27E8D;">)</span><span style="color: #6699CC;">)</span>
+<span style="color: #ff9f80; font-style: italic;">;; </span><span style="color: #ff9f80; font-style: italic;">notmuch-archive-tags &#12392;&#21516;&#27096;&#12398;&#35373;&#23450;&#12434;</span>
+<span style="color: #ff9f80; font-style: italic;">;; </span><span style="color: #ff9f80; font-style: italic;">&#26082;&#35501;&#12289;&#36820;&#20449;&#12289;&#36578;&#36865;&#12513;&#12540;&#12523;&#12395;&#23550;&#12375;&#12390;&#34892;&#12358;</span>
+<span style="color: #ffffff;">(</span><span style="color: #b6a0ff; font-weight: bold;">setq</span> notmuch-show-mark-read-tags '<span style="color: #ff66ff;">(</span><span style="color: #79a8ff;">"-unread"</span><span style="color: #ff66ff;">)</span><span style="color: #ffffff;">)</span>
+<span style="color: #ffffff;">(</span><span style="color: #b6a0ff; font-weight: bold;">setq</span> notmuch-message-replied-tags '<span style="color: #ff66ff;">(</span><span style="color: #79a8ff;">"+replied"</span><span style="color: #ff66ff;">)</span><span style="color: #ffffff;">)</span>
+<span style="color: #ffffff;">(</span><span style="color: #b6a0ff; font-weight: bold;">setq</span> notmuch-message-forwarded-tags '<span style="color: #ff66ff;">(</span><span style="color: #79a8ff;">"+forwarded"</span><span style="color: #ff66ff;">)</span><span style="color: #ffffff;">)</span>
 
-<span style="color: #65737E;">;; </span><span style="color: #65737E;">draft&#12501;&#12457;&#12523;&#12480;&#12398;&#35373;&#23450;</span>
-<span style="color: #6699CC;">(</span><span style="color: #C594C5;">setq</span> notmuch-draft-folder <span style="color: #99C794;">"drafts"</span><span style="color: #6699CC;">)</span>
+<span style="color: #ff9f80; font-style: italic;">;; </span><span style="color: #ff9f80; font-style: italic;">draft&#12501;&#12457;&#12523;&#12480;&#12398;&#35373;&#23450;</span>
+<span style="color: #ffffff;">(</span><span style="color: #b6a0ff; font-weight: bold;">setq</span> notmuch-draft-folder <span style="color: #79a8ff;">"drafts"</span><span style="color: #ffffff;">)</span>
 
-<span style="color: #65737E;">;; </span><span style="color: #65737E;">&#20316;&#25104;&#36884;&#20013;&#12395;&#20445;&#23384;&#12375;&#12383;&#12513;&#12540;&#12523;&#12395; draft &#12479;&#12464;&#12434;&#12388;&#12369;</span>
-<span style="color: #65737E;">;; </span><span style="color: #65737E;">inbox&#12289;unread &#12479;&#12464;&#12399;&#12399;&#12378;&#12377;</span>
-<span style="color: #65737E;">;; </span><span style="color: #65737E;">&#35373;&#23450;&#12375;&#12394;&#12356;&#12392; inbox&#12289;unread &#12479;&#12464;&#12418;&#12388;&#12367;</span>
-<span style="color: #6699CC;">(</span><span style="color: #C594C5;">setq</span> notmuch-draft-tags '<span style="color: #E27E8D;">(</span><span style="color: #99C794;">"+draft"</span> <span style="color: #99C794;">"-inbox"</span> <span style="color: #99C794;">"-unread"</span><span style="color: #E27E8D;">)</span><span style="color: #6699CC;">)</span>
+<span style="color: #ff9f80; font-style: italic;">;; </span><span style="color: #ff9f80; font-style: italic;">&#20316;&#25104;&#36884;&#20013;&#12395;&#20445;&#23384;&#12375;&#12383;&#12513;&#12540;&#12523;&#12395; draft &#12479;&#12464;&#12434;&#12388;&#12369;</span>
+<span style="color: #ff9f80; font-style: italic;">;; </span><span style="color: #ff9f80; font-style: italic;">inbox&#12289;unread &#12479;&#12464;&#12399;&#12399;&#12378;&#12377;</span>
+<span style="color: #ff9f80; font-style: italic;">;; </span><span style="color: #ff9f80; font-style: italic;">&#35373;&#23450;&#12375;&#12394;&#12356;&#12392; inbox&#12289;unread &#12479;&#12464;&#12418;&#12388;&#12367;</span>
+<span style="color: #ffffff;">(</span><span style="color: #b6a0ff; font-weight: bold;">setq</span> notmuch-draft-tags '<span style="color: #ff66ff;">(</span><span style="color: #79a8ff;">"+draft"</span> <span style="color: #79a8ff;">"-inbox"</span> <span style="color: #79a8ff;">"-unread"</span><span style="color: #ff66ff;">)</span><span style="color: #ffffff;">)</span>
 
-<span style="color: #65737E;">;; </span><span style="color: #65737E;">&#12479;&#12464;&#20966;&#29702;&#12398;&#12461;&#12540;&#12496;&#12452;&#12531;&#12487;&#12451;&#12531;&#12464;</span>
-<span style="color: #65737E;">;; </span><span style="color: #65737E;">&#20363;&#12360;&#12400; notmuch-search &#12514;&#12540;&#12489;&#12420; notmuch-show &#12514;&#12540;&#12489;&#12391;</span>
-<span style="color: #65737E;">;; </span><span style="color: #65737E;">k d &#12392;&#20837;&#21147;&#12377;&#12427;&#12392; deleted &#12479;&#12464;&#12364;&#36861;&#21152;&#12373;&#12428;&#12289;inbox&#12289;archived &#12479;&#12464;&#12364;&#12399;&#12378;&#12373;&#12428;&#12427;</span>
-<span style="color: #6699CC;">(</span><span style="color: #C594C5;">setq</span> notmuch-tagging-keys
-      `<span style="color: #E27E8D;">(</span><span style="color: #99C794;">(</span>,<span style="color: #C594C5;">(</span>kbd <span style="color: #99C794;">"a"</span><span style="color: #C594C5;">)</span> notmuch-archive-tags <span style="color: #99C794;">"Archive"</span><span style="color: #99C794;">)</span>
-        <span style="color: #99C794;">(</span>,<span style="color: #C594C5;">(</span>kbd <span style="color: #99C794;">"d"</span><span style="color: #C594C5;">)</span> <span style="color: #C594C5;">(</span><span style="color: #99C794;">"+deleted"</span> <span style="color: #99C794;">"-inbox"</span> <span style="color: #99C794;">"-archived"</span><span style="color: #C594C5;">)</span> <span style="color: #99C794;">"Delete"</span><span style="color: #99C794;">)</span>
-        <span style="color: #99C794;">(</span>,<span style="color: #C594C5;">(</span>kbd <span style="color: #99C794;">"f"</span><span style="color: #C594C5;">)</span> <span style="color: #C594C5;">(</span><span style="color: #99C794;">"+flagged"</span><span style="color: #C594C5;">)</span> <span style="color: #99C794;">"Flag"</span><span style="color: #99C794;">)</span>
-        <span style="color: #99C794;">(</span>,<span style="color: #C594C5;">(</span>kbd <span style="color: #99C794;">"u"</span><span style="color: #C594C5;">)</span> notmuch-show-mark-read-tags <span style="color: #99C794;">"Mark read"</span><span style="color: #99C794;">)</span><span style="color: #E27E8D;">)</span><span style="color: #6699CC;">)</span>
+<span style="color: #ff9f80; font-style: italic;">;; </span><span style="color: #ff9f80; font-style: italic;">&#12479;&#12464;&#20966;&#29702;&#12398;&#12461;&#12540;&#12496;&#12452;&#12531;&#12487;&#12451;&#12531;&#12464;</span>
+<span style="color: #ff9f80; font-style: italic;">;; </span><span style="color: #ff9f80; font-style: italic;">&#20363;&#12360;&#12400; notmuch-search &#12514;&#12540;&#12489;&#12420; notmuch-show &#12514;&#12540;&#12489;&#12391;</span>
+<span style="color: #ff9f80; font-style: italic;">;; </span><span style="color: #ff9f80; font-style: italic;">k d &#12392;&#20837;&#21147;&#12377;&#12427;&#12392; deleted &#12479;&#12464;&#12364;&#36861;&#21152;&#12373;&#12428;&#12289;inbox&#12289;archived &#12479;&#12464;&#12364;&#12399;&#12378;&#12373;&#12428;&#12427;</span>
+<span style="color: #ffffff;">(</span><span style="color: #b6a0ff; font-weight: bold;">setq</span> notmuch-tagging-keys
+      `<span style="color: #ff66ff;">(</span><span style="color: #00eff0;">(</span>,<span style="color: #ff6b55;">(</span>kbd <span style="color: #79a8ff;">"a"</span><span style="color: #ff6b55;">)</span> notmuch-archive-tags <span style="color: #79a8ff;">"Archive"</span><span style="color: #00eff0;">)</span>
+        <span style="color: #00eff0;">(</span>,<span style="color: #ff6b55;">(</span>kbd <span style="color: #79a8ff;">"d"</span><span style="color: #ff6b55;">)</span> <span style="color: #ff6b55;">(</span><span style="color: #79a8ff;">"+deleted"</span> <span style="color: #79a8ff;">"-inbox"</span> <span style="color: #79a8ff;">"-archived"</span><span style="color: #ff6b55;">)</span> <span style="color: #79a8ff;">"Delete"</span><span style="color: #00eff0;">)</span>
+        <span style="color: #00eff0;">(</span>,<span style="color: #ff6b55;">(</span>kbd <span style="color: #79a8ff;">"f"</span><span style="color: #ff6b55;">)</span> <span style="color: #ff6b55;">(</span><span style="color: #79a8ff;">"+flagged"</span><span style="color: #ff6b55;">)</span> <span style="color: #79a8ff;">"Flag"</span><span style="color: #00eff0;">)</span>
+        <span style="color: #00eff0;">(</span>,<span style="color: #ff6b55;">(</span>kbd <span style="color: #79a8ff;">"u"</span><span style="color: #ff6b55;">)</span> notmuch-show-mark-read-tags <span style="color: #79a8ff;">"Mark read"</span><span style="color: #00eff0;">)</span><span style="color: #ff66ff;">)</span><span style="color: #ffffff;">)</span>
 
-<span style="color: #65737E;">;; </span><span style="color: #65737E;">&#12513;&#12483;&#12475;&#12540;&#12472;&#26908;&#32034;&#12398;&#12461;&#12540;&#12496;&#12452;&#12531;&#12487;&#12451;&#12531;&#12464;</span>
-<span style="color: #65737E;">;; </span><span style="color: #65737E;">&#20363;&#12360;&#12400; notmuch-hello&#12289;notmuch-search&#12289;notmuch-show &#12514;&#12540;&#12489;&#12391;</span>
-<span style="color: #65737E;">;; </span><span style="color: #65737E;">j A &#12392;&#20837;&#21147;&#12377;&#12427;&#12392;&#12377;&#12409;&#12390;&#12398;&#12513;&#12540;&#12523;&#12364;&#34920;&#31034;&#12373;&#12428;&#12289;</span>
-<span style="color: #65737E;">;; </span><span style="color: #65737E;">j i &#12392;&#20837;&#21147;&#12377;&#12427;&#12392; inbox &#12479;&#12464;&#12364;&#12388;&#12356;&#12383;&#12513;&#12540;&#12523;&#12364;&#34920;&#31034;&#12373;&#12428;&#12427;</span>
-<span style="color: #6699CC;">(</span><span style="color: #C594C5;">setq</span> notmuch-saved-searches
-      `<span style="color: #E27E8D;">(</span><span style="color: #99C794;">(</span><span style="color: #EC5f67;">:name</span> <span style="color: #99C794;">"all"</span> <span style="color: #EC5f67;">:query</span> <span style="color: #99C794;">"*"</span> <span style="color: #EC5f67;">:key</span> ,<span style="color: #C594C5;">(</span>kbd <span style="color: #99C794;">"A"</span><span style="color: #C594C5;">)</span><span style="color: #99C794;">)</span>
-        <span style="color: #99C794;">(</span><span style="color: #EC5f67;">:name</span> <span style="color: #99C794;">"archived"</span> <span style="color: #EC5f67;">:query</span> <span style="color: #99C794;">"tag:archived"</span> <span style="color: #EC5f67;">:key</span> ,<span style="color: #C594C5;">(</span>kbd <span style="color: #99C794;">"a"</span><span style="color: #C594C5;">)</span><span style="color: #99C794;">)</span>
-        <span style="color: #99C794;">(</span><span style="color: #EC5f67;">:name</span> <span style="color: #99C794;">"deleted"</span> <span style="color: #EC5f67;">:query</span> <span style="color: #99C794;">"tag:deleted"</span> <span style="color: #EC5f67;">:key</span> ,<span style="color: #C594C5;">(</span>kbd <span style="color: #99C794;">"D"</span><span style="color: #C594C5;">)</span><span style="color: #99C794;">)</span>
-        <span style="color: #99C794;">(</span><span style="color: #EC5f67;">:name</span> <span style="color: #99C794;">"drafts"</span> <span style="color: #EC5f67;">:query</span> <span style="color: #99C794;">"tag:draft"</span> <span style="color: #EC5f67;">:key</span> ,<span style="color: #C594C5;">(</span>kbd <span style="color: #99C794;">"d"</span><span style="color: #C594C5;">)</span><span style="color: #99C794;">)</span>
-        <span style="color: #99C794;">(</span><span style="color: #EC5f67;">:name</span> <span style="color: #99C794;">"flagged"</span> <span style="color: #EC5f67;">:query</span> <span style="color: #99C794;">"tag:flagged"</span> <span style="color: #EC5f67;">:key</span> ,<span style="color: #C594C5;">(</span>kbd <span style="color: #99C794;">"f"</span><span style="color: #C594C5;">)</span><span style="color: #99C794;">)</span>
-        <span style="color: #99C794;">(</span><span style="color: #EC5f67;">:name</span> <span style="color: #99C794;">"inbox"</span> <span style="color: #EC5f67;">:query</span> <span style="color: #99C794;">"tag:inbox"</span> <span style="color: #EC5f67;">:key</span> ,<span style="color: #C594C5;">(</span>kbd <span style="color: #99C794;">"i"</span><span style="color: #C594C5;">)</span><span style="color: #99C794;">)</span>
-        <span style="color: #99C794;">(</span><span style="color: #EC5f67;">:name</span> <span style="color: #99C794;">"replied"</span> <span style="color: #EC5f67;">:query</span> <span style="color: #99C794;">"tag:replied"</span> <span style="color: #EC5f67;">:key</span> ,<span style="color: #C594C5;">(</span>kbd <span style="color: #99C794;">"R"</span><span style="color: #C594C5;">)</span><span style="color: #99C794;">)</span>
-        <span style="color: #99C794;">(</span><span style="color: #EC5f67;">:name</span> <span style="color: #99C794;">"sent"</span> <span style="color: #EC5f67;">:query</span> <span style="color: #99C794;">"tag:sent"</span> <span style="color: #EC5f67;">:key</span> ,<span style="color: #C594C5;">(</span>kbd <span style="color: #99C794;">"s"</span><span style="color: #C594C5;">)</span><span style="color: #99C794;">)</span>
-        <span style="color: #99C794;">(</span><span style="color: #EC5f67;">:name</span> <span style="color: #99C794;">"unread"</span> <span style="color: #EC5f67;">:query</span> <span style="color: #99C794;">"tag:inbox AND tag:unread"</span> <span style="color: #EC5f67;">:key</span> ,<span style="color: #C594C5;">(</span>kbd <span style="color: #99C794;">"u"</span><span style="color: #C594C5;">)</span><span style="color: #99C794;">)</span><span style="color: #E27E8D;">)</span><span style="color: #6699CC;">)</span>
+<span style="color: #ff9f80; font-style: italic;">;; </span><span style="color: #ff9f80; font-style: italic;">&#12513;&#12483;&#12475;&#12540;&#12472;&#26908;&#32034;&#12398;&#12461;&#12540;&#12496;&#12452;&#12531;&#12487;&#12451;&#12531;&#12464;</span>
+<span style="color: #ff9f80; font-style: italic;">;; </span><span style="color: #ff9f80; font-style: italic;">&#20363;&#12360;&#12400; notmuch-hello&#12289;notmuch-search&#12289;notmuch-show &#12514;&#12540;&#12489;&#12391;</span>
+<span style="color: #ff9f80; font-style: italic;">;; </span><span style="color: #ff9f80; font-style: italic;">j A &#12392;&#20837;&#21147;&#12377;&#12427;&#12392;&#12377;&#12409;&#12390;&#12398;&#12513;&#12540;&#12523;&#12364;&#34920;&#31034;&#12373;&#12428;&#12289;</span>
+<span style="color: #ff9f80; font-style: italic;">;; </span><span style="color: #ff9f80; font-style: italic;">j i &#12392;&#20837;&#21147;&#12377;&#12427;&#12392; inbox &#12479;&#12464;&#12364;&#12388;&#12356;&#12383;&#12513;&#12540;&#12523;&#12364;&#34920;&#31034;&#12373;&#12428;&#12427;</span>
+<span style="color: #ffffff;">(</span><span style="color: #b6a0ff; font-weight: bold;">setq</span> notmuch-saved-searches
+      `<span style="color: #ff66ff;">(</span><span style="color: #00eff0;">(</span><span style="color: #f78fe7; font-weight: bold;">:name</span> <span style="color: #79a8ff;">"all"</span> <span style="color: #f78fe7; font-weight: bold;">:query</span> <span style="color: #79a8ff;">"*"</span> <span style="color: #f78fe7; font-weight: bold;">:key</span> ,<span style="color: #ff6b55;">(</span>kbd <span style="color: #79a8ff;">"A"</span><span style="color: #ff6b55;">)</span><span style="color: #00eff0;">)</span>
+        <span style="color: #00eff0;">(</span><span style="color: #f78fe7; font-weight: bold;">:name</span> <span style="color: #79a8ff;">"archived"</span> <span style="color: #f78fe7; font-weight: bold;">:query</span> <span style="color: #79a8ff;">"tag:archived"</span> <span style="color: #f78fe7; font-weight: bold;">:key</span> ,<span style="color: #ff6b55;">(</span>kbd <span style="color: #79a8ff;">"a"</span><span style="color: #ff6b55;">)</span><span style="color: #00eff0;">)</span>
+        <span style="color: #00eff0;">(</span><span style="color: #f78fe7; font-weight: bold;">:name</span> <span style="color: #79a8ff;">"deleted"</span> <span style="color: #f78fe7; font-weight: bold;">:query</span> <span style="color: #79a8ff;">"tag:deleted"</span> <span style="color: #f78fe7; font-weight: bold;">:key</span> ,<span style="color: #ff6b55;">(</span>kbd <span style="color: #79a8ff;">"D"</span><span style="color: #ff6b55;">)</span><span style="color: #00eff0;">)</span>
+        <span style="color: #00eff0;">(</span><span style="color: #f78fe7; font-weight: bold;">:name</span> <span style="color: #79a8ff;">"drafts"</span> <span style="color: #f78fe7; font-weight: bold;">:query</span> <span style="color: #79a8ff;">"tag:draft"</span> <span style="color: #f78fe7; font-weight: bold;">:key</span> ,<span style="color: #ff6b55;">(</span>kbd <span style="color: #79a8ff;">"d"</span><span style="color: #ff6b55;">)</span><span style="color: #00eff0;">)</span>
+        <span style="color: #00eff0;">(</span><span style="color: #f78fe7; font-weight: bold;">:name</span> <span style="color: #79a8ff;">"flagged"</span> <span style="color: #f78fe7; font-weight: bold;">:query</span> <span style="color: #79a8ff;">"tag:flagged"</span> <span style="color: #f78fe7; font-weight: bold;">:key</span> ,<span style="color: #ff6b55;">(</span>kbd <span style="color: #79a8ff;">"f"</span><span style="color: #ff6b55;">)</span><span style="color: #00eff0;">)</span>
+        <span style="color: #00eff0;">(</span><span style="color: #f78fe7; font-weight: bold;">:name</span> <span style="color: #79a8ff;">"inbox"</span> <span style="color: #f78fe7; font-weight: bold;">:query</span> <span style="color: #79a8ff;">"tag:inbox"</span> <span style="color: #f78fe7; font-weight: bold;">:key</span> ,<span style="color: #ff6b55;">(</span>kbd <span style="color: #79a8ff;">"i"</span><span style="color: #ff6b55;">)</span><span style="color: #00eff0;">)</span>
+        <span style="color: #00eff0;">(</span><span style="color: #f78fe7; font-weight: bold;">:name</span> <span style="color: #79a8ff;">"replied"</span> <span style="color: #f78fe7; font-weight: bold;">:query</span> <span style="color: #79a8ff;">"tag:replied"</span> <span style="color: #f78fe7; font-weight: bold;">:key</span> ,<span style="color: #ff6b55;">(</span>kbd <span style="color: #79a8ff;">"R"</span><span style="color: #ff6b55;">)</span><span style="color: #00eff0;">)</span>
+        <span style="color: #00eff0;">(</span><span style="color: #f78fe7; font-weight: bold;">:name</span> <span style="color: #79a8ff;">"sent"</span> <span style="color: #f78fe7; font-weight: bold;">:query</span> <span style="color: #79a8ff;">"tag:sent"</span> <span style="color: #f78fe7; font-weight: bold;">:key</span> ,<span style="color: #ff6b55;">(</span>kbd <span style="color: #79a8ff;">"s"</span><span style="color: #ff6b55;">)</span><span style="color: #00eff0;">)</span>
+        <span style="color: #00eff0;">(</span><span style="color: #f78fe7; font-weight: bold;">:name</span> <span style="color: #79a8ff;">"unread"</span> <span style="color: #f78fe7; font-weight: bold;">:query</span> <span style="color: #79a8ff;">"tag:inbox AND tag:unread"</span> <span style="color: #f78fe7; font-weight: bold;">:key</span> ,<span style="color: #ff6b55;">(</span>kbd <span style="color: #79a8ff;">"u"</span><span style="color: #ff6b55;">)</span><span style="color: #00eff0;">)</span><span style="color: #ff66ff;">)</span><span style="color: #ffffff;">)</span>
 
-<span style="color: #65737E;">;; </span><span style="color: #65737E;">notmuch-search &#12514;&#12540;&#12489;&#12391;</span>
-<span style="color: #65737E;">;; </span><span style="color: #65737E;">&#29305;&#23450;&#12398;&#12479;&#12464;&#12364;&#12388;&#12356;&#12383;&#12513;&#12483;&#12475;&#12540;&#12472;&#12398;&#33394;&#12392;&#25991;&#23383;&#12398;&#22826;&#12373;&#12434;&#22793;&#12360;&#12427;</span>
-<span style="color: #6699CC;">(</span><span style="color: #C594C5;">setq</span> notmuch-search-line-faces
-      '<span style="color: #E27E8D;">(</span><span style="color: #99C794;">(</span><span style="color: #99C794;">"unread"</span> . <span style="color: #C594C5;">(</span><span style="color: #EC5f67;">:weight</span> bold<span style="color: #C594C5;">)</span><span style="color: #99C794;">)</span>
-        <span style="color: #99C794;">(</span><span style="color: #99C794;">"flagged"</span> . <span style="color: #C594C5;">(</span><span style="color: #EC5f67;">:foreground</span> <span style="color: #99C794;">"#E27E8D"</span><span style="color: #C594C5;">)</span><span style="color: #99C794;">)</span>
-        <span style="color: #99C794;">(</span><span style="color: #99C794;">"deleted"</span> . <span style="color: #C594C5;">(</span><span style="color: #EC5f67;">:foreground</span> <span style="color: #99C794;">"#A7ADBA"</span><span style="color: #C594C5;">)</span><span style="color: #99C794;">)</span><span style="color: #E27E8D;">)</span><span style="color: #6699CC;">)</span>
+<span style="color: #ff9f80; font-style: italic;">;; </span><span style="color: #ff9f80; font-style: italic;">notmuch-search &#12514;&#12540;&#12489;&#12391;</span>
+<span style="color: #ff9f80; font-style: italic;">;; </span><span style="color: #ff9f80; font-style: italic;">&#29305;&#23450;&#12398;&#12479;&#12464;&#12364;&#12388;&#12356;&#12383;&#12513;&#12483;&#12475;&#12540;&#12472;&#12398;&#33394;&#12392;&#25991;&#23383;&#12398;&#22826;&#12373;&#12434;&#22793;&#12360;&#12427;</span>
+<span style="color: #ffffff;">(</span><span style="color: #b6a0ff; font-weight: bold;">setq</span> notmuch-search-line-faces
+      '<span style="color: #ff66ff;">(</span><span style="color: #00eff0;">(</span><span style="color: #79a8ff;">"unread"</span> . <span style="color: #ff6b55;">(</span><span style="color: #f78fe7; font-weight: bold;">:weight</span> bold<span style="color: #ff6b55;">)</span><span style="color: #00eff0;">)</span>
+        <span style="color: #00eff0;">(</span><span style="color: #79a8ff;">"flagged"</span> . <span style="color: #ff6b55;">(</span><span style="color: #f78fe7; font-weight: bold;">:foreground</span> <span style="color: #79a8ff;">"#E27E8D"</span><span style="color: #ff6b55;">)</span><span style="color: #00eff0;">)</span>
+        <span style="color: #00eff0;">(</span><span style="color: #79a8ff;">"deleted"</span> . <span style="color: #ff6b55;">(</span><span style="color: #f78fe7; font-weight: bold;">:foreground</span> <span style="color: #79a8ff;">"#A7ADBA"</span><span style="color: #ff6b55;">)</span><span style="color: #00eff0;">)</span><span style="color: #ff66ff;">)</span><span style="color: #ffffff;">)</span>
 
-<span style="color: #65737E;">;; </span><span style="color: #65737E;">&#36865;&#20449;&#12375;&#12383;&#12513;&#12540;&#12523;&#12398;&#20445;&#23384;&#22580;&#25152;&#12392;&#12289;&#36865;&#20449;&#12375;&#12383;&#12513;&#12540;&#12523;&#12398;&#12479;&#12464;&#20966;&#29702;&#12398;&#35373;&#23450;</span>
-<span style="color: #65737E;">;; </span><span style="color: #65737E;">&#36865;&#20449;&#24460;&#12395; sent &#12479;&#12464;&#12434;&#12388;&#12369; unread&#12289;inbox &#12479;&#12464;&#12434;&#12399;&#12378;&#12377;</span>
-<span style="color: #65737E;">;; </span><span style="color: #65737E;">&#35373;&#23450;&#12375;&#12394;&#12356;&#12392; unread&#12289;inbox &#12479;&#12464;&#12418;&#12388;&#12367;</span>
-<span style="color: #6699CC;">(</span><span style="color: #C594C5;">setq</span> notmuch-fcc-dirs
-      '<span style="color: #E27E8D;">(</span><span style="color: #99C794;">(</span><span style="color: #99C794;">"account1@example.com"</span> . <span style="color: #99C794;">"[account1]/sent +sent -unread -inbox"</span><span style="color: #99C794;">)</span>
-        <span style="color: #99C794;">(</span><span style="color: #99C794;">"account2@example.com"</span> . <span style="color: #99C794;">"[account2]/sent +sent -unread -inbox"</span><span style="color: #99C794;">)</span><span style="color: #E27E8D;">)</span><span style="color: #6699CC;">)</span>
+<span style="color: #ff9f80; font-style: italic;">;; </span><span style="color: #ff9f80; font-style: italic;">&#36865;&#20449;&#12375;&#12383;&#12513;&#12540;&#12523;&#12398;&#20445;&#23384;&#22580;&#25152;&#12392;&#12289;&#36865;&#20449;&#12375;&#12383;&#12513;&#12540;&#12523;&#12398;&#12479;&#12464;&#20966;&#29702;&#12398;&#35373;&#23450;</span>
+<span style="color: #ff9f80; font-style: italic;">;; </span><span style="color: #ff9f80; font-style: italic;">&#36865;&#20449;&#24460;&#12395; sent &#12479;&#12464;&#12434;&#12388;&#12369; unread&#12289;inbox &#12479;&#12464;&#12434;&#12399;&#12378;&#12377;</span>
+<span style="color: #ff9f80; font-style: italic;">;; </span><span style="color: #ff9f80; font-style: italic;">&#35373;&#23450;&#12375;&#12394;&#12356;&#12392; unread&#12289;inbox &#12479;&#12464;&#12418;&#12388;&#12367;</span>
+<span style="color: #ffffff;">(</span><span style="color: #b6a0ff; font-weight: bold;">setq</span> notmuch-fcc-dirs
+      '<span style="color: #ff66ff;">(</span><span style="color: #00eff0;">(</span><span style="color: #79a8ff;">"account1@example.com"</span> . <span style="color: #79a8ff;">"[account1]/sent +sent -unread -inbox"</span><span style="color: #00eff0;">)</span>
+        <span style="color: #00eff0;">(</span><span style="color: #79a8ff;">"account2@example.com"</span> . <span style="color: #79a8ff;">"[account2]/sent +sent -unread -inbox"</span><span style="color: #00eff0;">)</span><span style="color: #ff66ff;">)</span><span style="color: #ffffff;">)</span>
 </pre>
 </div>
 
@@ -676,9 +702,9 @@ notmuch には3つのモードが備わっています。
 </div>
 </div>
 
-<div id="outline-container-org347a2d0" class="outline-2">
-<h2 id="org347a2d0">不要なメールファイルをゴミ箱に移動させる</h2>
-<div class="outline-text-2" id="text-org347a2d0">
+<div id="outline-container-org365851c" class="outline-2">
+<h2 id="org365851c">不要なメールファイルをゴミ箱に移動させる</h2>
+<div class="outline-text-2" id="text-org365851c">
 <p>
 Notmuch にはファイルを書き換えたり移動させたりする機能はありません。したがってメールファイルを直接削除することもできません。メールをゴミ箱に移動させるためには削除したいメールに <code>deleted</code> タグをつけます。その後ターミナルで次のように入力してファイルをゴミ箱に移動させます（参考: <a href="https://notmuchmail.org/excluding/">Notmuch: Message exclusion and deletion</a>）。
 </p>
@@ -689,9 +715,9 @@ Notmuch にはファイルを書き換えたり移動させたりする機能は
 </div>
 </div>
 
-<div id="outline-container-org2cc8adb" class="outline-2">
-<h2 id="org2cc8adb">おまけ1: User-Agent の設定</h2>
-<div class="outline-text-2" id="text-org2cc8adb">
+<div id="outline-container-orgc78b2a3" class="outline-2">
+<h2 id="orgc78b2a3">おまけ1: User-Agent の設定</h2>
+<div class="outline-text-2" id="text-orgc78b2a3">
 <p>
 メールのソースにはヘッダとして差出人(From)や宛先(To)の情報が記載されています。Emacs notmuch でソースを確認する場合は <code>notmuch-show</code> モードで <kbd>V</kbd> を押します。このメールヘッダには差出人が用いたメールソフトの情報が <code>User-Agent</code> や <code>X-Mailer</code> として記載されていることもあります。Notmuch と Emacs を使っていますよ、という情報をメールヘッダに
 </p>
@@ -702,26 +728,26 @@ User-Agent: Notmuch 0.36, Emacs 28.1
 という形で記載したい場合は <code>init.el</code> に次の設定を加えます。
 </p>
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #6699CC;">(</span><span style="color: #C594C5;">setq</span> notmuch-mua-user-agent-function
-      <span style="color: #E27E8D;">(</span><span style="color: #C594C5;">lambda</span> <span style="color: #99C794;">()</span>
-        <span style="color: #99C794;">(</span>concat <span style="color: #99C794;">"Notmuch "</span> <span style="color: #C594C5;">(</span>notmuch-cli-version<span style="color: #C594C5;">)</span> <span style="color: #99C794;">", Emacs "</span> emacs-version<span style="color: #99C794;">)</span><span style="color: #E27E8D;">)</span><span style="color: #6699CC;">)</span>
+<pre class="src src-elisp"><span style="color: #ffffff;">(</span><span style="color: #b6a0ff; font-weight: bold;">setq</span> notmuch-mua-user-agent-function
+      <span style="color: #ff66ff;">(</span><span style="color: #b6a0ff; font-weight: bold;">lambda</span> <span style="color: #00eff0;">()</span>
+        <span style="color: #00eff0;">(</span>concat <span style="color: #79a8ff;">"Notmuch "</span> <span style="color: #ff6b55;">(</span>notmuch-cli-version<span style="color: #ff6b55;">)</span> <span style="color: #79a8ff;">", Emacs "</span> emacs-version<span style="color: #00eff0;">)</span><span style="color: #ff66ff;">)</span><span style="color: #ffffff;">)</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org6917048" class="outline-2">
-<h2 id="org6917048">おまけ2: org-mode のファイルにリンクをはる</h2>
-<div class="outline-text-2" id="text-org6917048">
+<div id="outline-container-org8d0cab0" class="outline-2">
+<h2 id="org8d0cab0">おまけ2: org-mode のファイルにリンクをはる</h2>
+<div class="outline-text-2" id="text-org8d0cab0">
 <p>
 ol-notmuch を用いると「メッセージ」、あるいは「検索結果」へのリンクを org-mode にはることができます。  <code>package-install ol-notmuch</code> でインストールできます。 <code>init.el</code> への設定は特にありません。メッセージ（notmuch-show モード）または検索結果（notmuch-search モード）上で <kbd>C-c</kbd> <kbd>l</kbd> を押すとリンクが生成されます。 org-mode で <kbd>C-c</kbd> <kbd>C-l</kbd> を押すとリンクをはることができます。
 </p>
 </div>
 </div>
 
-<div id="outline-container-org963b08c" class="outline-2">
-<h2 id="org963b08c">おわりに</h2>
-<div class="outline-text-2" id="text-org963b08c">
+<div id="outline-container-orgccae8cd" class="outline-2">
+<h2 id="orgccae8cd">おわりに</h2>
+<div class="outline-text-2" id="text-orgccae8cd">
 <p>
 Mail.app から Emacs notmuch への移行のデメリットは添付ファイルをクイックルックで確認できないことです。人によっては html 形式のメールがテキスト形式で表示されることも気になるかもしれませんが、個人的には問題ありません。「はじめに」で述べた Emacs notmuch のメリットも合わせて考えると、総合的にはこのメール環境に満足しています。
 </p>

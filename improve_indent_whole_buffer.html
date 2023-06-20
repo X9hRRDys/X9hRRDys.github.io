@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="Emacs のバッファ全体の一括インデントの改善">
+<link rel="alternate"
+      type="application/rss+xml"
+      href="https://X9hRRDys.github.io/rss.xml"
+      title="RSS feed for https://X9hRRDys.github.io/">
+<title>Emacs バッファ全範囲の一括インデントの改善</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="author" content="X9hRRDys">
+<meta name="referrer" content="no-referrer">
+<link href= "static/style.css" rel="stylesheet" type="text/css">
+<link rel="icon" href="static/favicon.svg" type="image/svg+xml"></head>
+<body>
+<div id="preamble" class="status"><div class="header"><a href="index.html">Blog</a>
+<a href="archive.html">Archive</a></div></div>
+<div id="content">
+<div class="post-date">2022/08/21</div><h1 class="post-title"><a href="https://X9hRRDys.github.io/improve_indent_whole_buffer.html">Emacs バッファ全範囲の一括インデントの改善</a></h1>
+<p>
+バッファ全体を一括インデントするとき <kbd>C-x</kbd> <kbd>h</kbd> (mark-whole-buffer) でバッファの全範囲を選択した後 <kbd>TAB</kbd> または <kbd>C-M-\</kbd> で一括インデントできます。しかしながらこの操作はカーソルの位置がバッファの先頭に移動してしまうため、インデントの後にもとの編集位置までもどる手間がかかります。
+</p>
+
+<p>
+カーソルの位置は維持したまま全範囲を一括インデントするために、 <code>init.el</code> に次のように追記しました。 <kbd>C-x</kbd> <kbd>TAB</kbd> にバインディングしています。
+</p>
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #ffffff;">(</span><span style="color: #b6a0ff; font-weight: bold;">defun</span> <span style="color: #feacd0;">my-indent-whole-buffer</span> <span style="color: #ff66ff;">()</span>
+  <span style="color: #9ac8e0; font-style: italic;">"Indent all lines in the buffer."</span>
+  <span style="color: #ff66ff;">(</span><span style="color: #b6a0ff; font-weight: bold;">interactive</span><span style="color: #ff66ff;">)</span>
+  <span style="color: #ff66ff;">(</span>indent-region <span style="color: #00eff0;">(</span>point-min<span style="color: #00eff0;">)</span> <span style="color: #00eff0;">(</span>point-max<span style="color: #00eff0;">)</span><span style="color: #ff66ff;">)</span><span style="color: #ffffff;">)</span>
+<span style="color: #ffffff;">(</span>global-set-key <span style="color: #ff66ff;">(</span>kbd <span style="color: #79a8ff;">"C-x TAB"</span><span style="color: #ff66ff;">)</span> #'my-indent-whole-buffer<span style="color: #ffffff;">)</span>
+</pre>
+</div>
+<div class="taglist"></div></div>
+<div id="postamble" class="status"></div>
+</body>
+</html>

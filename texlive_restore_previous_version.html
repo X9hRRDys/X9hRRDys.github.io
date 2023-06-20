@@ -22,9 +22,9 @@
 TeX Live のパッケージを <code>tlmgr</code> でアップデートすると nicematrix に不具合がありコンパイルがうまくできなくなりました。このパッケージを更新前のものに戻します。
 </p>
 
-<div id="outline-container-org1f141d6" class="outline-2">
-<h2 id="org1f141d6">パッケージを復元する</h2>
-<div class="outline-text-2" id="text-org1f141d6">
+<div id="outline-container-org2b0f25c" class="outline-2">
+<h2 id="org2b0f25c">パッケージを復元する</h2>
+<div class="outline-text-2" id="text-org2b0f25c">
 <p>
 まず nicematrix の情報を確認するためターミナルで次のように入力します。
 </p>
@@ -43,7 +43,7 @@ TeX Live のパッケージを <code>tlmgr</code> でアップデートすると
 と入力して
 </p>
 <div class="org-src-container">
-<pre class="src src-shell">Available backups for nicematrix: 64185 <span style="color: #6699CC;">(</span>2022-09-20 07:03<span style="color: #6699CC;">)</span>
+<pre class="src src-shell">Available backups for nicematrix: 64185 <span style="color: #ffffff;">(</span>2022-09-20 07:03<span style="color: #ffffff;">)</span>
 </pre>
 </div>
 <p>
@@ -53,6 +53,9 @@ TeX Live のパッケージを <code>tlmgr</code> でアップデートすると
 <pre class="src src-shell">sudo tlmgr restore nicematrix 64185
 </pre>
 </div>
+<p>
+これでコンパイルできました。
+</p>
 </div>
 </div>
 <div class="taglist"></div></div>

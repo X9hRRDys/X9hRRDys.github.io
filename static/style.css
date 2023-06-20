@@ -2,8 +2,8 @@ body {
   line-height: 1.8;
   -webkit-text-size-adjust: 100%;
   font-family: sans-serif;
-  background-color: #041C32;
-  color: #D6D6D3;
+  background-color: #0d0e1c;
+  color: #ffffff;
   max-width: 1000px;
   margin: 0 auto;
   padding: 2em;
@@ -41,7 +41,7 @@ code, kbd {
 }
 
 kbd {
-  border: 1px solid #D6D6D3;
+  border: 1px solid #ffffff;
   border-radius: 3px;
   padding: 0 5px;
 }
@@ -53,7 +53,7 @@ kbd {
 
 pre {
   display: block;
-  color: #D6D6D3;
+  color: #ffffff;
   border: #064663 1px solid;
   font-family: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono", "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro", "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
   padding: 0.5em;
