@@ -4,23 +4,23 @@
 <title><![CDATA[Blog]]></title>
 <description><![CDATA[Blog]]></description>
 <link>https://X9hRRDys.github.io/</link>
-<lastBuildDate>Sun, 13 Aug 2023 00:56:23 +0900</lastBuildDate>
+<lastBuildDate>Sun, 13 Aug 2023 07:31:55 +0900</lastBuildDate>
 <item>
   <title><![CDATA[Mac に Emacs 29.1 をインストールする]]></title>
   <description><![CDATA[
 
-<div id="outline-container-orgf0dfa0f" class="outline-2">
-<h2 id="orgf0dfa0f">はじめに</h2>
-<div class="outline-text-2" id="text-orgf0dfa0f">
+<div id="outline-container-org945403b" class="outline-2">
+<h2 id="org945403b">はじめに</h2>
+<div class="outline-text-2" id="text-org945403b">
 <p>
 MacBook Pro (Apple M2, Ventura 13.5, 2022) に GNU Emacs 29.1 をインストールしました。インストールオプションとしてネイティブコンパイル、tree-sitter、xwidgets を導入しました。
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgcb6f404" class="outline-2">
-<h2 id="orgcb6f404">準備</h2>
-<div class="outline-text-2" id="text-orgcb6f404">
+<div id="outline-container-orgefe805a" class="outline-2">
+<h2 id="orgefe805a">準備</h2>
+<div class="outline-text-2" id="text-orgefe805a">
 <p>
 Emacs 29.1 のネイティブコンパイル機能と tree-sitter を使うために Homebrew で関連ツールをインストールしました。
 </p>
@@ -33,9 +33,9 @@ brew install tree-sitter
 </div>
 </div>
 
-<div id="outline-container-org3eb9f28" class="outline-2">
-<h2 id="org3eb9f28">Emacs のインストール</h2>
-<div class="outline-text-2" id="text-org3eb9f28">
+<div id="outline-container-org57919f1" class="outline-2">
+<h2 id="org57919f1">Emacs のインストール</h2>
+<div class="outline-text-2" id="text-org57919f1">
 <p>
 まず GNU Emacs の日本のミラーサイト（<a href="http://ftp.jaist.ac.jp/pub/GNU/emacs/">http://ftp.jaist.ac.jp/pub/GNU/emacs/</a>）から emacs-29.1.tar.gz をダウンロード、展開します。展開したファイルは <code>~/Downloads/</code> にあるとします。
 </p>
@@ -56,7 +56,7 @@ brew install tree-sitter
 </p>
 
 <p>
-次の4つのコマンドを実行すると <code>~/Download/emacs-29.1/nextstep/</code> に <code>Emacs.app</code> が作成されました。
+次の4つのコマンドを実行すると <code>~/Downloads/emacs-29.1/nextstep/</code> に <code>Emacs.app</code> が作成されました。
 </p>
 <div class="org-src-container">
 <pre class="src src-shell">./autogen.sh
