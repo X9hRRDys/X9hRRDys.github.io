@@ -4,7 +4,82 @@
 <title><![CDATA[Blog]]></title>
 <description><![CDATA[Blog]]></description>
 <link>https://X9hRRDys.github.io/</link>
-<lastBuildDate>Tue, 20 Jun 2023 22:36:29 +0900</lastBuildDate>
+<lastBuildDate>Sun, 13 Aug 2023 00:46:54 +0900</lastBuildDate>
+<item>
+  <title><![CDATA[Mac に Emacs 29.1 をインストールする]]></title>
+  <description><![CDATA[
+
+<div id="outline-container-org5ec9516" class="outline-2">
+<h2 id="org5ec9516">はじめに</h2>
+<div class="outline-text-2" id="text-org5ec9516">
+<p>
+MacBook Pro (Apple M2, Ventura 13.5, 2022) に GNU Emacs をインストールしました。インストールオプションとしてネイティブコンパイル、tree-sitter、xwidgets を導入しました。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org03a99b5" class="outline-2">
+<h2 id="org03a99b5">準備</h2>
+<div class="outline-text-2" id="text-org03a99b5">
+<p>
+Emacs 29.1 のネイティブコンパイル機能と tree-sitter を使うために Homebrew で関連ツールをインストールしました。
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">brew install gcc
+brew install libgccjit
+brew install tree-sitter
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc5c2a3a" class="outline-2">
+<h2 id="orgc5c2a3a">Emacs のインストール</h2>
+<div class="outline-text-2" id="text-orgc5c2a3a">
+<p>
+まず GNU Emacs の日本のミラーサイト（<a href="http://ftp.jaist.ac.jp/pub/GNU/emacs/">http://ftp.jaist.ac.jp/pub/GNU/emacs/</a>）から emacs-29.1.tar.gz をダウンロード、展開します。展開したファイルは <code>~/Downloads/</code> にあるとします。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell"><span style="color: #f78fe7; font-weight: bold;">cd</span> ~/Downloads/emacs-29.1/
+</pre>
+</div>
+<p>
+でソースファイルに移動して
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">./configure --help
+</pre>
+</div>
+<p>
+でインストールオプションを確認します。今回は native compilation, tree-sitter, xwidgets 機能を導入します。
+</p>
+
+<p>
+次の4つのコマンドを実行すると <code>~/Download/emacs-29.1/nextstep/</code> に <code>Emacs.app</code> が作成されました。
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">./autogen.sh
+./configure --with-xwidgets --with-native-compilation --with-tree-sitter
+make clean
+make install
+</pre>
+</div>
+
+<p>
+Emacs.app を <code>~/Applications</code> に移動させます。そのまま Emacs を開こうとしても "Emacs.app is damaged and can't be opend." というメッセージが表示されます。次のコマンドを実行するとうまく開けるようになりました。
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">xattr -d com.apple.quarantine /Applications/Emacs.app
+</pre>
+</div>
+</div>
+</div>
+<div class="taglist"></div>]]></description>
+  <link>https://x9hrrdys.github.io/emacs_29_build.html</link>
+  <guid>https://x9hrrdys.github.io/emacs_29_build.html</guid>
+  <pubDate>Sat, 12 Aug 2023 00:00:00 +0900</pubDate>
+</item>
 <item>
   <title><![CDATA[TeX Live のパッケージの復元]]></title>
   <description><![CDATA[
@@ -51,7 +126,7 @@ TeX Live のパッケージを <code>tlmgr</code> でアップデートすると
 <div class="taglist"></div>]]></description>
   <link>https://x9hrrdys.github.io/texlive_restore_previous_version.html</link>
   <guid>https://x9hrrdys.github.io/texlive_restore_previous_version.html</guid>
-  <pubDate>Wed, 12 Oct 2022 09:00:00 +0900</pubDate>
+  <pubDate>Wed, 12 Oct 2022 00:00:00 +0900</pubDate>
 </item>
 <item>
   <title><![CDATA[Emacs バッファ全範囲の一括インデントの改善]]></title>
@@ -74,7 +149,7 @@ TeX Live のパッケージを <code>tlmgr</code> でアップデートすると
 <div class="taglist"></div>]]></description>
   <link>https://x9hrrdys.github.io/improve_indent_whole_buffer.html</link>
   <guid>https://x9hrrdys.github.io/improve_indent_whole_buffer.html</guid>
-  <pubDate>Sun, 21 Aug 2022 09:00:00 +0900</pubDate>
+  <pubDate>Sun, 21 Aug 2022 00:00:00 +0900</pubDate>
 </item>
 <item>
   <title><![CDATA[Emacs の行頭移動 C-a の改善]]></title>
@@ -178,7 +253,7 @@ Emacs でカーソル位置を行頭に移動させる場合 <kbd>C-a</kbd> と�
 <div class="taglist"></div>]]></description>
   <link>https://x9hrrdys.github.io/improve_move_beginning_of_line.html</link>
   <guid>https://x9hrrdys.github.io/improve_move_beginning_of_line.html</guid>
-  <pubDate>Sat, 20 Aug 2022 09:00:00 +0900</pubDate>
+  <pubDate>Sat, 20 Aug 2022 00:00:00 +0900</pubDate>
 </item>
 <item>
   <title><![CDATA[Emacs と Notmuch でメールを管理する]]></title>
@@ -739,7 +814,7 @@ Mail.app から Emacs notmuch への移行のデメリットは添付ファイ�
 <div class="taglist"></div>]]></description>
   <link>https://x9hrrdys.github.io/emacs_notmuch_mail.html</link>
   <guid>https://x9hrrdys.github.io/emacs_notmuch_mail.html</guid>
-  <pubDate>Thu, 21 Jul 2022 09:00:00 +0900</pubDate>
+  <pubDate>Thu, 21 Jul 2022 00:00:00 +0900</pubDate>
 </item>
 </channel>
 </rss>
