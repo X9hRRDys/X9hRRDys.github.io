@@ -19,9 +19,9 @@
 <div id="content">
 <div class="post-date">2022/07/21</div><h1 class="post-title"><a href="https://X9hRRDys.github.io/emacs_notmuch_mail.html">Emacs と Notmuch でメールを管理する</a></h1>
 
-<div id="outline-container-org717ff0f" class="outline-2">
-<h2 id="org717ff0f">はじめに</h2>
-<div class="outline-text-2" id="text-org717ff0f">
+<div id="outline-container-org8abcdcd" class="outline-2">
+<h2 id="org8abcdcd">はじめに</h2>
+<div class="outline-text-2" id="text-org8abcdcd">
 <p>
 Emacs でメールを管理する方法はいくつかありますが、タグベース管理ができる Notmuch を採用しました。以前は Mac 標準の Mail.app を使用していましたがそれと比較して次のメリットがあります。
 </p>
@@ -38,9 +38,9 @@ Emacs でメールを管理する方法はいくつかありますが、タグ�
 </p>
 </div>
 
-<div id="outline-container-org6a77e21" class="outline-3">
-<h3 id="org6a77e21">Maildir 形式と Mbox 形式について</h3>
-<div class="outline-text-3" id="text-org6a77e21">
+<div id="outline-container-org6bc72ce" class="outline-3">
+<h3 id="org6bc72ce">Maildir 形式と Mbox 形式について</h3>
+<div class="outline-text-3" id="text-org6bc72ce">
 <p>
 メールの保存形式にはおもに次の2つがあります。
 </p>
@@ -56,9 +56,9 @@ Notmuch は Maildir 形式のみに対応しています。Maildir 形式はメ�
 </div>
 </div>
 
-<div id="outline-container-org39dc097" class="outline-3">
-<h3 id="org39dc097">POP3 と IMAP について</h3>
-<div class="outline-text-3" id="text-org39dc097">
+<div id="outline-container-orgd044b49" class="outline-3">
+<h3 id="orgd044b49">POP3 と IMAP について</h3>
+<div class="outline-text-3" id="text-orgd044b49">
 <p>
 メールにアクセスする形式にはおもに次の2つがあります。
 </p>
@@ -74,9 +74,9 @@ POP3 は郵便局にあるメールを郵便屋さんが自宅まで届けてく
 </div>
 </div>
 
-<div id="outline-container-orge7e2032" class="outline-2">
-<h2 id="orge7e2032">使用するソフトフェア</h2>
-<div class="outline-text-2" id="text-orge7e2032">
+<div id="outline-container-org9b11eb6" class="outline-2">
+<h2 id="org9b11eb6">使用するソフトフェア</h2>
+<div class="outline-text-2" id="text-org9b11eb6">
 <p>
 Mail.app など通常のメールソフトは受信・インデックス作成・閲覧・送信などを一括で行いますが、 Emacs でメール環境を整える場合はそれらの機能を別々にインストール、設定する必要があります。今回使用するものは次の通りです。
 </p>
@@ -90,9 +90,9 @@ Mail.app など通常のメールソフトは受信・インデックス作成�
 </div>
 </div>
 
-<div id="outline-container-org65d1319" class="outline-2">
-<h2 id="org65d1319">準備: メールの保存場所の作成</h2>
-<div class="outline-text-2" id="text-org65d1319">
+<div id="outline-container-org5b184a4" class="outline-2">
+<h2 id="org5b184a4">準備: メールの保存場所の作成</h2>
+<div class="outline-text-2" id="text-org5b184a4">
 <p>
 まずは Maildir 形式のメールの保存場所を用意します。
 </p>
@@ -104,7 +104,7 @@ Mail.app など通常のメールソフトは受信・インデックス作成�
 <li><p>
 メールアカウントが2つ(<code>[account1], [account2]</code>)ある場合のディレクトリのツリーは次のようになります。 <code>sent</code> と <code>drafts</code> 内にもディレクトリ <code>cur, new, tmp</code> を作成します（システムが自動的に作成してくれる場合もあります）。
 </p>
-<pre class="example" id="org0a58661">
+<pre class="example" id="org8a14457">
 ~/.maildir
 ├── drafts
 │   ├── cur
@@ -131,18 +131,18 @@ Mail.app など通常のメールソフトは受信・インデックス作成�
 </div>
 </div>
 
-<div id="outline-container-orgec5a973" class="outline-2">
-<h2 id="orgec5a973">getmail6 でPOP3メールを受信する</h2>
-<div class="outline-text-2" id="text-orgec5a973">
+<div id="outline-container-org5129013" class="outline-2">
+<h2 id="org5129013">getmail6 でPOP3メールを受信する</h2>
+<div class="outline-text-2" id="text-org5129013">
 </div>
-<div id="outline-container-orga6df667" class="outline-3">
-<h3 id="orga6df667">インストール</h3>
-<div class="outline-text-3" id="text-orga6df667">
+<div id="outline-container-org3ba38fe" class="outline-3">
+<h3 id="org3ba38fe">インストール</h3>
+<div class="outline-text-3" id="text-org3ba38fe">
 <p>
-getmail6 は POP3、 IMAPメールを受信するためのプログラムです。 Python 3 で動作します。
+getmail6 は POP3、 IMAPメールを受信するためのプログラムです。 Python 3 で動作します<sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup>。
 </p>
 <div class="org-src-container">
-<pre class="src src-shell">pip3 install getmail6
+<pre class="src src-shell">brew install getmail6
 </pre>
 </div>
 <p>
@@ -151,9 +151,9 @@ getmail6 は POP3、 IMAPメールを受信するためのプログラムです�
 </div>
 </div>
 
-<div id="outline-container-orgdcbf813" class="outline-3">
-<h3 id="orgdcbf813">設定</h3>
-<div class="outline-text-3" id="text-orgdcbf813">
+<div id="outline-container-orgadf4f31" class="outline-3">
+<h3 id="orgadf4f31">設定</h3>
+<div class="outline-text-3" id="text-orgadf4f31">
 <p>
 設定ファイルは <code>~.getmail/</code> 内に置きます。 <code>~/.getmail/[account1]</code>, <code>~/.getmail/[account2]</code>,&#x2026; のようにアカウントごとにファイルを作成します。
 設定の例は次の通りです（参考: <a href="https://getmail6.org/configuration.html#configuring">getmail documentation</a> ）。
@@ -181,9 +181,9 @@ getmail6 は POP3、 IMAPメールを受信するためのプログラムです�
 </div>
 </div>
 
-<div id="outline-container-org93cf132" class="outline-3">
-<h3 id="org93cf132">メールの受信</h3>
-<div class="outline-text-3" id="text-org93cf132">
+<div id="outline-container-org56fe461" class="outline-3">
+<h3 id="org56fe461">メールの受信</h3>
+<div class="outline-text-3" id="text-org56fe461">
 <p>
 ターミナルで
 </p>
@@ -198,13 +198,13 @@ getmail6 は POP3、 IMAPメールを受信するためのプログラムです�
 </div>
 </div>
 
-<div id="outline-container-orgc5a5d72" class="outline-2">
-<h2 id="orgc5a5d72">Notmuch</h2>
-<div class="outline-text-2" id="text-orgc5a5d72">
+<div id="outline-container-org3299bd5" class="outline-2">
+<h2 id="org3299bd5">Notmuch</h2>
+<div class="outline-text-2" id="text-org3299bd5">
 </div>
-<div id="outline-container-orgadefc36" class="outline-3">
-<h3 id="orgadefc36">インストール</h3>
-<div class="outline-text-3" id="text-orgadefc36">
+<div id="outline-container-org9d8665a" class="outline-3">
+<h3 id="org9d8665a">インストール</h3>
+<div class="outline-text-3" id="text-org9d8665a">
 <p>
 Notmuch は受信したメールのインデックス作成、タグ処理、検索を行うためのプログラムです。メールファイルそのものを書き換えたり移動させたりする機能はありません。
 </p>
@@ -218,9 +218,9 @@ Notmuch は受信したメールのインデックス作成、タグ処理、検
 </div>
 </div>
 
-<div id="outline-container-org007d360" class="outline-3">
-<h3 id="org007d360">設定</h3>
-<div class="outline-text-3" id="text-org007d360">
+<div id="outline-container-org00c356d" class="outline-3">
+<h3 id="org00c356d">設定</h3>
+<div class="outline-text-3" id="text-org00c356d">
 <p>
 初期設定を行います。ターミナルにはじめて <code>notmuch</code> と入力すると、 <code>~/.notmuch-config</code> が作成されます。対話形式の質問に答えることで設定を行うこともできますが <code>~/.notmuch-config</code> を直接編集することもできます（参考: <a href="https://notmuchmail.org/getting-started/">notmuch: Getting Started with Notmuch</a>）。
 </p>
@@ -273,9 +273,9 @@ Notmuch の検索は日本語にも対応していますが設定が必要です
 </div>
 </div>
 
-<div id="outline-container-orga46f8db" class="outline-3">
-<h3 id="orga46f8db">ターミナル上でメールを検索してみる</h3>
-<div class="outline-text-3" id="text-orga46f8db">
+<div id="outline-container-org52923f5" class="outline-3">
+<h3 id="org52923f5">ターミナル上でメールを検索してみる</h3>
+<div class="outline-text-3" id="text-org52923f5">
 <p>
 ここまでの設定で Notmuch がうまく機能しているか確かめてみます。ターミナルでメールを検索してみます（参考: <a href="https://notmuchmail.org/doc/latest/man7/notmuch-search-terms.html">notmuch-search-terms</a>）。
 </p>
@@ -289,13 +289,13 @@ notmuch search from:&#23665; AND date:2020..today <span style="color: #ff9f80; f
 </div>
 </div>
 
-<div id="outline-container-orgcc1b377" class="outline-2">
-<h2 id="orgcc1b377">msmtp でメールを送信する</h2>
-<div class="outline-text-2" id="text-orgcc1b377">
+<div id="outline-container-org55e6d8e" class="outline-2">
+<h2 id="org55e6d8e">msmtp でメールを送信する</h2>
+<div class="outline-text-2" id="text-org55e6d8e">
 </div>
-<div id="outline-container-org0897918" class="outline-3">
-<h3 id="org0897918">インストール</h3>
-<div class="outline-text-3" id="text-org0897918">
+<div id="outline-container-org69d6b50" class="outline-3">
+<h3 id="org69d6b50">インストール</h3>
+<div class="outline-text-3" id="text-org69d6b50">
 <p>
 msmtp はメールを送信するためのプログラムです。
 </p>
@@ -309,9 +309,9 @@ msmtp はメールを送信するためのプログラムです。
 </div>
 </div>
 
-<div id="outline-container-org0d11279" class="outline-3">
-<h3 id="org0d11279">設定</h3>
-<div class="outline-text-3" id="text-org0d11279">
+<div id="outline-container-org45da08a" class="outline-3">
+<h3 id="org45da08a">設定</h3>
+<div class="outline-text-3" id="text-org45da08a">
 <p>
 設定ファイル <code>~/.msmtprc</code> に複数のアカウントの設定をまとめて記述します（参考: <a href="https://marlam.de/msmtp/msmtp.html#A-user-configuration-file">msmtp: Examples: A user configuration file</a>）。
 </p>
@@ -350,9 +350,9 @@ account default : [account1]
 </div>
 </div>
 
-<div id="outline-container-org564e9d5" class="outline-2">
-<h2 id="org564e9d5">Emacs の notmuch</h2>
-<div class="outline-text-2" id="text-org564e9d5">
+<div id="outline-container-org9e36e77" class="outline-2">
+<h2 id="org9e36e77">Emacs の notmuch</h2>
+<div class="outline-text-2" id="text-org9e36e77">
 <p>
 Emacs の notmuch では受信したメールの閲覧、検索、タグ処理、メールの作成と送信ができます。 <kbd>M-x package-install notmuch</kbd> でインストールできます。
 </p>
@@ -367,9 +367,9 @@ notmuch には3つのモードが備わっています。
 </ul>
 </div>
 
-<div id="outline-container-orge7c5c40" class="outline-3">
-<h3 id="orge7c5c40">作業の流れの例</h3>
-<div class="outline-text-3" id="text-orge7c5c40">
+<div id="outline-container-orgf8f0f45" class="outline-3">
+<h3 id="orgf8f0f45">作業の流れの例</h3>
+<div class="outline-text-3" id="text-orgf8f0f45">
 <ul class="org-ul">
 <li><kbd>M-x notmuch</kbd> で notmuch-hello バッファが表示される。 <kbd>G</kbd> でインデックスの更新。新しいメールには <code>unread</code> と <code>inbox</code> のタグが自動的につく。</li>
 <li><kbd>j</kbd> <kbd>u</kbd> で notmuch-search モードの新しいバッファが開き、未読メッセージ（ <code>unread</code> タグのメッセージ）の一覧が表示される。</li>
@@ -386,9 +386,9 @@ notmuch には3つのモードが備わっています。
 </div>
 </div>
 
-<div id="outline-container-org0d0d1a8" class="outline-3">
-<h3 id="org0d0d1a8">init.el の設定</h3>
-<div class="outline-text-3" id="text-org0d0d1a8">
+<div id="outline-container-org939283a" class="outline-3">
+<h3 id="org939283a">init.el の設定</h3>
+<div class="outline-text-3" id="text-org939283a">
 <div class="org-src-container">
 <pre class="src src-elisp"><span style="color: #ff9f80; font-style: italic;">;; </span><span style="color: #ff9f80; font-style: italic;">&#26085;&#26412;&#35486;&#26908;&#32034;&#12398;&#12383;&#12417;&#12398;&#29872;&#22659;&#22793;&#25968;&#12398;&#35373;&#23450;</span>
 <span style="color: #ffffff;">(</span>setenv <span style="color: #79a8ff;">"XAPIAN_CJK_NGRAM"</span> <span style="color: #79a8ff;">"1"</span><span style="color: #ffffff;">)</span>
@@ -516,9 +516,9 @@ notmuch には3つのモードが備わっています。
 </div>
 </div>
 
-<div id="outline-container-org365851c" class="outline-2">
-<h2 id="org365851c">不要なメールファイルをゴミ箱に移動させる</h2>
-<div class="outline-text-2" id="text-org365851c">
+<div id="outline-container-orgd90dbe1" class="outline-2">
+<h2 id="orgd90dbe1">不要なメールファイルをゴミ箱に移動させる</h2>
+<div class="outline-text-2" id="text-orgd90dbe1">
 <p>
 Notmuch にはファイルを書き換えたり移動させたりする機能はありません。したがってメールファイルを直接削除することもできません。メールをゴミ箱に移動させるためには削除したいメールに <code>deleted</code> タグをつけます。その後ターミナルで次のように入力してファイルをゴミ箱に移動させます（参考: <a href="https://notmuchmail.org/excluding/">Notmuch: Message exclusion and deletion</a>）。
 </p>
@@ -529,9 +529,9 @@ Notmuch にはファイルを書き換えたり移動させたりする機能は
 </div>
 </div>
 
-<div id="outline-container-orgc78b2a3" class="outline-2">
-<h2 id="orgc78b2a3">おまけ1: User-Agent の設定</h2>
-<div class="outline-text-2" id="text-orgc78b2a3">
+<div id="outline-container-org92387d0" class="outline-2">
+<h2 id="org92387d0">おまけ1: User-Agent の設定</h2>
+<div class="outline-text-2" id="text-org92387d0">
 <p>
 メールのソースにはヘッダとして差出人(From)や宛先(To)の情報が記載されています。Emacs notmuch でソースを確認する場合は <code>notmuch-show</code> モードで <kbd>V</kbd> を押します。このメールヘッダには差出人が用いたメールソフトの情報が <code>User-Agent</code> や <code>X-Mailer</code> として記載されていることもあります。Notmuch と Emacs を使っていますよ、という情報をメールヘッダに
 </p>
@@ -550,18 +550,18 @@ User-Agent: Notmuch 0.36, Emacs 28.1
 </div>
 </div>
 
-<div id="outline-container-org8d0cab0" class="outline-2">
-<h2 id="org8d0cab0">おまけ2: org-mode のファイルにリンクをはる</h2>
-<div class="outline-text-2" id="text-org8d0cab0">
+<div id="outline-container-orge54ccee" class="outline-2">
+<h2 id="orge54ccee">おまけ2: org-mode のファイルにリンクをはる</h2>
+<div class="outline-text-2" id="text-orge54ccee">
 <p>
 ol-notmuch を用いると「メッセージ」、あるいは「検索結果」へのリンクを org-mode にはることができます。  <code>package-install ol-notmuch</code> でインストールできます。 <code>init.el</code> への設定は特にありません。メッセージ（notmuch-show モード）または検索結果（notmuch-search モード）上で <kbd>C-c</kbd> <kbd>l</kbd> を押すとリンクが生成されます。 org-mode で <kbd>C-c</kbd> <kbd>C-l</kbd> を押すとリンクをはることができます。
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgccae8cd" class="outline-2">
-<h2 id="orgccae8cd">おわりに</h2>
-<div class="outline-text-2" id="text-orgccae8cd">
+<div id="outline-container-org6c29668" class="outline-2">
+<h2 id="org6c29668">おわりに</h2>
+<div class="outline-text-2" id="text-org6c29668">
 <p>
 Mail.app から Emacs notmuch への移行のデメリットは添付ファイルをクイックルックで確認できないことです。人によっては html 形式のメールがテキスト形式で表示されることも気になるかもしれませんが、個人的には問題ありません。「はじめに」で述べた Emacs notmuch のメリットも合わせて考えると、総合的にはこのメール環境に満足しています。
 </p>
@@ -571,7 +571,17 @@ Mail.app から Emacs notmuch への移行のデメリットは添付ファイ�
 </p>
 </div>
 </div>
-<div class="taglist"></div></div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+<span class="timestamp-wrapper"><span class="timestamp">[2023-08-24 Thu] </span></span> はじめの記事では getmail6 を pip でインストールする方法を紹介していましたが Homebrew でインストールできるようになったので修正。
+</p></div></div>
+
+
+</div>
+</div><div class="taglist"></div></div>
 <div id="postamble" class="status"></div>
 </body>
 </html>
