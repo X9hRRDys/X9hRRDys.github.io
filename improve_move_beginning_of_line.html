@@ -18,19 +18,10 @@
 <a href="archive.html">Archive</a></div></div>
 <div id="content">
 <div class="post-date">2022/08/20</div><h1 class="post-title"><a href="https://X9hRRDys.github.io/improve_move_beginning_of_line.html">Emacs の行頭移動 C-a の改善</a></h1>
-
-<div id="outline-container-org9998f15" class="outline-2">
-<h2 id="org9998f15">はじめに</h2>
-<div class="outline-text-2" id="text-org9998f15">
 <p>
 Emacs で頻繁に使う行頭移動 <kbd>C-a</kbd> を改善しました。
 </p>
-</div>
-</div>
 
-<div id="outline-container-org995f88f" class="outline-2">
-<h2 id="org995f88f">行頭移動 <kbd>C-a</kbd> の改善</h2>
-<div class="outline-text-2" id="text-org995f88f">
 <p>
 Emacs でカーソル位置を行頭に移動させる場合 <kbd>C-a</kbd> と入力します。これは <code>move-beginning-of-line</code> という機能で、インデントに関わらずカーソルは左端まで移動します。しかしながら本当に実現したい操作は「行の空白以外の最初の文字への移動」であることがほとんどでした。今までは <kbd>C-a</kbd> <kbd>TAB</kbd> で行の左端に移動 → 空白以外の最初の文字に移動を実現していました。
 </p>
@@ -103,17 +94,10 @@ Emacs でカーソル位置を行頭に移動させる場合 <kbd>C-a</kbd> と�
 <span style="color: #ffffff;">(</span>global-set-key <span style="color: #ff66ff;">(</span>kbd <span style="color: #79a8ff;">"C-a"</span><span style="color: #ff66ff;">)</span> #'my-move-beginning-of-line<span style="color: #ffffff;">)</span>
 </pre>
 </div>
-</div>
-</div>
 
-<div id="outline-container-org47a455b" class="outline-2">
-<h2 id="org47a455b">おわりに</h2>
-<div class="outline-text-2" id="text-org47a455b">
 <p>
 小規模な改善ですが頻繁に用いる機能なので重要な改善でした。さまざまなパッケージをインストールして強力な Emacs を作ることも楽しいですが、このような小さな改善を積み重ねるのも楽しいことです。
 </p>
-</div>
-</div>
 <div class="taglist"></div></div>
 <div id="postamble" class="status"></div>
 </body>
