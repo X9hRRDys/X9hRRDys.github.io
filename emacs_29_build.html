@@ -2,12 +2,12 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="description" content="ネイティブコンパイル機能をもつ emacs 29.1 を M2 Mac にインストールしたときのメモ">
+<meta name="description" content="ネイティブコンパイル機能をもつ emacs 29.3 を M2 Mac にインストールしたときのメモ">
 <link rel="alternate"
       type="application/rss+xml"
       href="https://X9hRRDys.github.io/rss.xml"
       title="RSS feed for https://X9hRRDys.github.io/">
-<title>Mac に Emacs 29.1 をインストールする</title>
+<title>Mac に Emacs 29.3 をインストールする</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="author" content="X9hRRDys">
 <meta name="referrer" content="no-referrer">
@@ -17,22 +17,22 @@
 <div id="preamble" class="status"><div class="header"><a href="index.html">Blog</a>
 <a href="archive.html">Archive</a></div></div>
 <div id="content">
-<div class="post-date">2023/08/12</div><h1 class="post-title"><a href="https://X9hRRDys.github.io/emacs_29_build.html">Mac に Emacs 29.1 をインストールする</a></h1>
+<div class="post-date">2024/03/25</div><h1 class="post-title"><a href="https://X9hRRDys.github.io/emacs_29_build.html">Mac に Emacs 29.3 をインストールする</a></h1>
 
-<div id="outline-container-org945403b" class="outline-2">
-<h2 id="org945403b">はじめに</h2>
-<div class="outline-text-2" id="text-org945403b">
+<div id="outline-container-orgc93401d" class="outline-2">
+<h2 id="orgc93401d">はじめに</h2>
+<div class="outline-text-2" id="text-orgc93401d">
 <p>
-MacBook Pro (Apple M2, Ventura 13.5, 2022) に GNU Emacs 29.1 をインストールしました。インストールオプションとしてネイティブコンパイル、tree-sitter、xwidgets を導入しました。
+MacBook Pro (Apple M2, Ventura 13.5, 2022) に GNU Emacs 29.3 をインストールしました。インストールオプションとしてネイティブコンパイル、tree-sitter、xwidgets を導入しました。
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgefe805a" class="outline-2">
-<h2 id="orgefe805a">準備</h2>
-<div class="outline-text-2" id="text-orgefe805a">
+<div id="outline-container-org8f826f4" class="outline-2">
+<h2 id="org8f826f4">準備</h2>
+<div class="outline-text-2" id="text-org8f826f4">
 <p>
-Emacs 29.1 のネイティブコンパイル機能と tree-sitter を使うために Homebrew で関連ツールをインストールしました。
+Emacs 29.3 のネイティブコンパイル機能と tree-sitter を使うために Homebrew で関連ツールをインストールしました。
 </p>
 <div class="org-src-container">
 <pre class="src src-shell">brew install gcc
@@ -43,15 +43,15 @@ brew install tree-sitter
 </div>
 </div>
 
-<div id="outline-container-org57919f1" class="outline-2">
-<h2 id="org57919f1">Emacs のインストール</h2>
-<div class="outline-text-2" id="text-org57919f1">
+<div id="outline-container-org01b5b94" class="outline-2">
+<h2 id="org01b5b94">Emacs のインストール</h2>
+<div class="outline-text-2" id="text-org01b5b94">
 <p>
-まず GNU Emacs の日本のミラーサイト（<a href="http://ftp.jaist.ac.jp/pub/GNU/emacs/">http://ftp.jaist.ac.jp/pub/GNU/emacs/</a>）から emacs-29.1.tar.gz をダウンロード、展開します。展開したファイルは <code>~/Downloads/</code> にあるとします。
+まず GNU Emacs の日本のミラーサイト（<a href="http://ftp.jaist.ac.jp/pub/GNU/emacs/">http://ftp.jaist.ac.jp/pub/GNU/emacs/</a>）から emacs-29.3.tar.gz をダウンロード、展開します。展開したファイルは <code>~/Downloads/</code> にあるとします。
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell"><span style="color: #f78fe7; font-weight: bold;">cd</span> ~/Downloads/emacs-29.1/
+<pre class="src src-shell"><span style="color: #f78fe7; font-weight: bold;">cd</span> ~/Downloads/emacs-29.3/
 </pre>
 </div>
 <p>
@@ -66,11 +66,11 @@ brew install tree-sitter
 </p>
 
 <p>
-次の4つのコマンドを実行すると <code>~/Downloads/emacs-29.1/nextstep/</code> に <code>Emacs.app</code> が作成されました。
+次の4つのコマンドを実行すると <code>~/Downloads/emacs-29.3/nextstep/</code> に <code>Emacs.app</code> が作成されました。
 </p>
 <div class="org-src-container">
 <pre class="src src-shell">./autogen.sh
-./configure --with-xwidgets --with-native-compilation --with-tree-sitter
+./configure --with-xwidgets --with-native-compilation --with-tree-sitter --with-mailutils
 make clean
 make install
 </pre>
