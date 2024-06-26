@@ -2,12 +2,12 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="description" content="ネイティブコンパイル機能をもつ emacs 29.3 を M2 Mac にインストールしたときのメモ">
+<meta name="description" content="ネイティブコンパイル機能をもつ emacs 29.4 を M2 Mac にインストールしたときのメモ">
 <link rel="alternate"
       type="application/rss+xml"
       href="https://X9hRRDys.github.io/rss.xml"
       title="RSS feed for https://X9hRRDys.github.io/">
-<title>Mac に Emacs 29.3 をインストールする</title>
+<title>Mac に Emacs 29.4 をインストールする</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="author" content="X9hRRDys">
 <meta name="referrer" content="no-referrer">
@@ -17,41 +17,39 @@
 <div id="preamble" class="status"><div class="header"><a href="index.html">Blog</a>
 <a href="archive.html">Archive</a></div></div>
 <div id="content">
-<div class="post-date">2024/03/25</div><h1 class="post-title"><a href="https://X9hRRDys.github.io/emacs_29_build.html">Mac に Emacs 29.3 をインストールする</a></h1>
+<div class="post-date">2024/06/26</div><h1 class="post-title"><a href="https://X9hRRDys.github.io/emacs_29_build.html">Mac に Emacs 29.4 をインストールする</a></h1>
 
-<div id="outline-container-orgf0bfb32" class="outline-2">
-<h2 id="orgf0bfb32">はじめに</h2>
-<div class="outline-text-2" id="text-orgf0bfb32">
+<div id="outline-container-org0df2a47" class="outline-2">
+<h2 id="org0df2a47">はじめに</h2>
+<div class="outline-text-2" id="text-org0df2a47">
 <p>
-MacBook Pro (Apple M2, Sonoma 14.1) に GNU Emacs 29.3 をインストールしました。インストールオプションとしてネイティブコンパイル、tree-sitter、xwidgets を導入しました。
+MacBook Pro (Apple M2, Sonoma 14.1) に GNU Emacs 29.4 をインストールしました。
 </p>
 </div>
 </div>
 
-<div id="outline-container-org4f3233d" class="outline-2">
-<h2 id="org4f3233d">準備</h2>
-<div class="outline-text-2" id="text-org4f3233d">
+<div id="outline-container-orgb87d92e" class="outline-2">
+<h2 id="orgb87d92e">準備</h2>
+<div class="outline-text-2" id="text-orgb87d92e">
 <p>
-Emacs 29.3 のネイティブコンパイル機能と tree-sitter を使うために Homebrew で関連ツールをインストールしました。
+事前に Homebrew で関連ツールをインストールしました。
 </p>
 <div class="org-src-container">
-<pre class="src src-shell">brew install gcc
-brew install libgccjit
-brew install tree-sitter
+<pre class="src src-shell">brew install gcc libgccjit tree-sitter texinfo jansson
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org807cf84" class="outline-2">
-<h2 id="org807cf84">Emacs のインストール</h2>
-<div class="outline-text-2" id="text-org807cf84">
+<div id="outline-container-orgab07c2f" class="outline-2">
+<h2 id="orgab07c2f">Emacs のインストール</h2>
+<div class="outline-text-2" id="text-orgab07c2f">
 <p>
-まず GNU Emacs の日本のミラーサイト（<a href="http://ftp.jaist.ac.jp/pub/GNU/emacs/">http://ftp.jaist.ac.jp/pub/GNU/emacs/</a>）から emacs-29.3.tar.gz をダウンロード、展開します。展開したファイルは <code>~/Downloads/</code> にあるとします。
+まず GNU Emacs の日本のミラーサイト（<a href="http://ftp.jaist.ac.jp/pub/GNU/emacs/">http://ftp.jaist.ac.jp/pub/GNU/emacs/</a>）から emacs-29.4.tar.gz をダウンロード、展開します。展開したファイルは <code>~/Downloads/</code> にあるとします。
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell"><span style="color: #f78fe7; font-weight: bold;">cd</span> ~/Downloads/emacs-29.3/
+<pre class="src src-shell"><span style="color: #f78fe7; font-weight: bold;">cd</span> ~/Downloads/emacs-29.4/
 </pre>
 </div>
 <p>
@@ -66,7 +64,7 @@ brew install tree-sitter
 </p>
 
 <p>
-次の4つのコマンドを実行すると <code>~/Downloads/emacs-29.3/nextstep/</code> に <code>Emacs.app</code> が作成されました。
+次の4つのコマンドを実行すると <code>~/Downloads/emacs-29.4/nextstep/</code> に <code>Emacs.app</code> が作成されました。
 </p>
 <div class="org-src-container">
 <pre class="src src-shell">./autogen.sh
@@ -77,7 +75,15 @@ make install
 </div>
 
 <p>
-Emacs.app を <code>~/Applications</code> に移動させます。そのまま Emacs を開こうとしても "Emacs.app is damaged and can't be opend." というメッセージが表示されます。次のコマンドを実行するとうまく開けるようになりました。
+Emacs.app を <code>~/Applications</code> に移動させます。
+</p>
+<div class="org-src-container">
+<pre class="src src-shell"> mv nextstep/Emacs.app /Applications
+</pre>
+</div>
+
+<p>
+そのまま Emacs を開こうとしても "Emacs.app is damaged and can't be opend." というメッセージが表示されます。次のコマンドを実行するとうまく開けるようになりました。
 </p>
 <div class="org-src-container">
 <pre class="src src-shell">xattr -d com.apple.quarantine /Applications/Emacs.app
