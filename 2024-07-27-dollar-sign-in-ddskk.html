@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="ddskk の日本語入力中に $ を押したときの設定">
+<link rel="alternate"
+      type="application/rss+xml"
+      href="https://X9hRRDys.github.io/rss.xml"
+      title="RSS feed for https://X9hRRDys.github.io/">
+<title>ddskk のかな・カナモードで $ を押したときの設定</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="author" content="X9hRRDys">
+<meta name="referrer" content="no-referrer">
+<link href= "static/style.css" rel="stylesheet" type="text/css">
+<link rel="icon" href="static/favicon.svg" type="image/svg+xml"></head>
+<body>
+<div id="preamble" class="status"><div class="header"><a href="index.html">Blog</a>
+<a href="archive.html">Archive</a></div></div>
+<div id="content">
+<div class="post-date">2024/07/27</div><h1 class="post-title"><a href="https://X9hRRDys.github.io/2024-07-27-dollar-sign-in-ddskk.html">ddskk のかな・カナモードで $ を押したときの設定</a></h1>
+
+<div id="outline-container-orgc1e7bbe" class="outline-2">
+<h2 id="orgc1e7bbe">はじめに</h2>
+<div class="outline-text-2" id="text-orgc1e7bbe">
+<p>
+Emacs 上での文字入力には ddskk を利用しています。かな・カナモードで <kbd>$</kbd> を入力するために簡単な設定を行いました。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5bce138" class="outline-2">
+<h2 id="org5bce138">問題</h2>
+<div class="outline-text-2" id="text-org5bce138">
+<p>
+ddskk のかな・カナ入力モード（skk-j-mode）中に <kbd>$</kbd> を入力するとコマンド <code>skk-display-code-for-char-at-point</code> が実行されます。たとえばカーソルが文字「す」の上にあるときに <kbd>$</kbd> を押すとエコーエリアに以下のような文字コードの情報が出力されます（詳細は skk の info にも記載されています）。
+</p>
+<pre class="example" id="org5554203">
+す	KUTEN:04-25, JIS:#x2439, EUC:#xa4b9, SJIS:#x82b7, UNICODE:U+3059, 平仮名す,HIRAGANA LETTER SU
+</pre>
+
+<p>
+日本語かつ数式を含む LaTeX 文書を作成することが多いので個人的には <kbd>$</kbd> を押したときに次のような振る舞いだと便利です:
+</p>
+<ol class="org-ol">
+<li><kbd>$</kbd> を押した後は数式を入力することがほとんどなので、かな・カナモード (<code>skk-j-mode</code>) から半角英数を入力するモード (<code>skk-latin-mode</code>) に移行する</li>
+<li><code>$</code> が入力される</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-orgf1a4360" class="outline-2">
+<h2 id="orgf1a4360">設定</h2>
+<div class="outline-text-2" id="text-orgf1a4360">
+<p>
+上記の振る舞いを実現するために init.el に次の設定を追記しました。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #ffffff;">(</span><span style="color: #b6a0ff; font-weight: bold;">with-eval-after-load</span> 'skk
+  <span style="color: #ff66ff;">(</span>keymap-set skk-j-mode-map <span style="color: #79a8ff;">"$"</span>
+              <span style="color: #00eff0;">(</span><span style="color: #b6a0ff; font-weight: bold;">lambda</span> <span style="color: #ff6b55;">()</span>
+                <span style="color: #ff6b55;">(</span><span style="color: #b6a0ff; font-weight: bold;">interactive</span><span style="color: #ff6b55;">)</span>
+                <span style="color: #ff6b55;">(</span>skk-latin-mode-on<span style="color: #ff6b55;">)</span>
+                <span style="color: #ff6b55;">(</span>self-insert-command 1<span style="color: #ff6b55;">)</span><span style="color: #00eff0;">)</span><span style="color: #ff66ff;">)</span><span style="color: #ffffff;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div class="taglist"></div></div>
+<div id="postamble" class="status"></div>
+</body>
+</html>
