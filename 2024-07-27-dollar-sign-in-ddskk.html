@@ -18,23 +18,17 @@
 <a href="archive.html">Archive</a></div></div>
 <div id="content">
 <div class="post-date">2024/07/27</div><h1 class="post-title"><a href="https://X9hRRDys.github.io/2024-07-27-dollar-sign-in-ddskk.html">ddskk のかな・カナモードで $ を押したときの設定</a></h1>
-
-<div id="outline-container-orgdaef3e7" class="outline-2">
-<h2 id="orgdaef3e7">はじめに</h2>
-<div class="outline-text-2" id="text-orgdaef3e7">
 <p>
 Emacs 上での文字入力には ddskk を利用しています。かな・カナモードで <kbd>$</kbd> を入力したときの振る舞いを改善するために簡単な設定を行いました。
 </p>
-</div>
-</div>
 
-<div id="outline-container-org5754222" class="outline-2">
-<h2 id="org5754222">問題</h2>
-<div class="outline-text-2" id="text-org5754222">
+<div id="outline-container-org433d87f" class="outline-2">
+<h2 id="org433d87f">問題</h2>
+<div class="outline-text-2" id="text-org433d87f">
 <p>
 ddskk のかな・カナ入力モード（skk-j-mode）中に <kbd>$</kbd> を入力するとコマンド <code>skk-display-code-for-char-at-point</code> が実行されます。たとえばカーソルが文字「す」の上にあるときに <kbd>$</kbd> を押すとエコーエリアに以下のような文字コードの情報が出力されます（詳細は skk の info にも記載されています）。
 </p>
-<pre class="example" id="orga45ba38">
+<pre class="example" id="orgfdd29f9">
 す	KUTEN:04-25, JIS:#x2439, EUC:#xa4b9, SJIS:#x82b7, UNICODE:U+3059, 平仮名す,HIRAGANA LETTER SU
 </pre>
 
@@ -48,9 +42,9 @@ ddskk のかな・カナ入力モード（skk-j-mode）中に <kbd>$</kbd> を�
 </div>
 </div>
 
-<div id="outline-container-org7e5b165" class="outline-2">
-<h2 id="org7e5b165">設定</h2>
-<div class="outline-text-2" id="text-org7e5b165">
+<div id="outline-container-org699beca" class="outline-2">
+<h2 id="org699beca">設定</h2>
+<div class="outline-text-2" id="text-org699beca">
 <p>
 上記の振る舞いを実現するために init.el に次の設定を追記しました。
 </p>
