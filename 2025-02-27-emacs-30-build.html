@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="Emacs 30.1 を M2 Mac にインストールしたときのメモ">
+<link rel="alternate"
+      type="application/rss+xml"
+      href="https://X9hRRDys.github.io/rss.xml"
+      title="RSS feed for https://X9hRRDys.github.io/">
+<title>Mac に Emacs 30.1 をインストールする</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="author" content="X9hRRDys">
+<meta name="referrer" content="no-referrer">
+<link href= "static/style.css" rel="stylesheet" type="text/css">
+<link rel="icon" href="static/favicon.svg" type="image/svg+xml"></head>
+<body>
+<div id="preamble" class="status"><div class="header"><a href="index.html">Blog</a>
+<a href="archive.html">Archive</a></div></div>
+<div id="content">
+<div class="post-date">2025/02/27</div><h1 class="post-title"><a href="https://X9hRRDys.github.io/2025-02-27-emacs-30-build.html">Mac に Emacs 30.1 をインストールする</a></h1>
+<p>
+Mac (Apple M2, Sonoma 14.6.1) に GNU Emacs 30.1 をインストールしました。
+</p>
+<div id="outline-container-org9ae5d0f" class="outline-2">
+<h2 id="org9ae5d0f">準備</h2>
+<div class="outline-text-2" id="text-org9ae5d0f">
+<p>
+事前に Homebrew で関連ツールをインストールしました。
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">brew install libgccjit tree-sitter
+</pre>
+</div>
+<p>
+環境によって他にもインストールすべきものがあるかもしれません。
+</p>
+</div>
+</div>
+<div id="outline-container-orgafe6da8" class="outline-2">
+<h2 id="orgafe6da8">Emacs のインストール</h2>
+<div class="outline-text-2" id="text-orgafe6da8">
+<p>
+まず GNU Emacs の日本のミラーサイト（<a href="http://ftp.jaist.ac.jp/pub/GNU/emacs/">http://ftp.jaist.ac.jp/pub/GNU/emacs/</a>）から emacs-30.1.tar.gz をダウンロード、展開します。展開したファイルは <code>~/Downloads/</code> にあるとします。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell"><span style="color: #f78fe7; font-weight: bold;">cd</span> ~/Downloads/emacs-30.1/
+</pre>
+</div>
+<p>
+でソースファイルに移動して
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">./configure --help
+</pre>
+</div>
+<p>
+でインストールオプションを確認します。今回は native compilation, tree-sitter, xwidgets 機能を導入します。
+</p>
+
+<p>
+次の4つのコマンドを実行すると <code>~/Downloads/emacs-30.1/nextstep/</code> に
+<code>Emacs.app</code> が作成されました。注意点として Emacs 30.1 では native
+compilation がデフォルトになったようですが、 自分の環境だと
+<code>--with-native-compilation</code> を明記しないと「 <code>libgccjit</code> がない」と警告が出たのでオプションに明記しています。
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">./autogen.sh
+./configure --with-xwidgets --with-native-compilation --with-tree-sitter --with-mailutils
+make clean
+make install
+</pre>
+</div>
+
+<p>
+Emacs.app を <code>~/Applications</code> に移動させます。
+</p>
+<div class="org-src-container">
+<pre class="src src-shell"> mv nextstep/Emacs.app /Applications
+</pre>
+</div>
+
+<p>
+そのまま Emacs を開こうとしても "Emacs.app is damaged and can't be opend." というメッセージが表示されます。次のコマンドを実行するとうまく開けるようになりました。
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">xattr -d com.apple.quarantine /Applications/Emacs.app
+</pre>
+</div>
+
+<p>
+Emacs 29.4 からアップデートした直後は vertico と marginalia が原因で
+Emacs の挙動がおかしくなりましたが <code>package-reinstall vertico</code> と
+<code>package-reinstall marginalia</code> で正常に戻りました。
+</p>
+</div>
+</div>
+<div class="taglist"></div></div>
+<div id="postamble" class="status"></div>
+</body>
+</html>
